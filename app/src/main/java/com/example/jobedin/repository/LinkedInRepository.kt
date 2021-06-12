@@ -1,32 +1,59 @@
 package com.example.jobedin.repository
 
-import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
+import com.example.jobedin.data.remote.dto.PostsDtoItem
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 class LinkedInRepository {
 
-    val database = Firebase.database
-    val postDatabaseReference = database.getReference("posts")
+    private val database = Firebase.database
+    private val postDatabaseReference = database.getReference("posts")
+    val postsLiveData = MutableLiveData<ArrayList<PostsDtoItem?>>(arrayListOf())
 
-    fun setAddListener(){
+    val size = mutableStateOf(0)
 
-        postDatabaseReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
+    init {
+        setListener()
+    }
 
-                val value = dataSnapshot.getValue<String>()
-                Log.d("as", "Value is: $value")
+    fun setListener() {
+
+
+        postDatabaseReference.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val data = snapshot.getValue(PostsDtoItem::class.java)
+                if (postsLiveData.value.isNullOrEmpty()) {
+                    postsLiveData.value?.add(data)
+                } else {
+                    postsLiveData.value?.add(0, data)
+                }
+                size.value = postsLiveData.value?.size ?: 0
+                Log.d("dasda", "${postsLiveData.value?.get(0)?.userName}")
+                Log.d("dasda", "${postsLiveData.value?.size}")
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+
             }
 
             override fun onCancelled(error: DatabaseError) {
 
-                Log.w("as", "Failed to read value.", error.toException())
             }
+
         })
 
     }
