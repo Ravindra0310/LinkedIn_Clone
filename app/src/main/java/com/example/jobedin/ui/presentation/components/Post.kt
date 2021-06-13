@@ -105,7 +105,8 @@ fun Post(
             loadPicture(postImage, R.drawable.ic_comment).value?.let {
                 Image(
                     bitmap = it.asImageBitmap(),
-                    contentDescription = "image of the post done by $userName"
+                    contentDescription = "image of the post done by $userName",
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         } else if (postVideo != null && postVideo != "nan") {

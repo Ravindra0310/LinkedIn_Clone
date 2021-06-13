@@ -9,3 +9,15 @@ f
 6app/src/main/java/com/example/jobedin/MyApplication.kt,1\8\18228ec5c054e87ac78a1602265364cb9880e3ef
 e
 5app/src/main/java/com/example/jobedin/di/AppModule.kt,a\7\a79f0945d13c9b714bb7517c2b34aed39ad0e0e2
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+f
+6app/src/main/java/com/example/jobedin/ui/theme/Font.kt,0\d\0d096b24e4b5a96f3a8847f4dcf6ce6eb84b4388
+e
+5app/src/main/java/com/example/jobedin/MainActivity.kt,1\8\185c9b96f9f4e3cd8ae1c31e6bb1f42eecb95dd0
+x
+Happ/src/main/java/com/example/jobedin/ui/presentation/homeScreen/test.kt,1\d\1dc51ba879b063d948088cd000cb1867677610e0
+
+Oapp/src/main/java/com/example/jobedin/ui/presentation/components/VideoPlayer.kt,f\0\f0b06472b5665d5a56f5adec24738231a0823b93
+q
+Aapp/src/main/java/com/example/jobedin/data/remote/dto/PostsDto.kt,a\a\aa1c8b81f7509c9d9948f95605c5d3f6c0cff0f2

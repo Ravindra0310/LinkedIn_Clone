@@ -15,7 +15,6 @@ class LinkedInRepository {
     private val database = Firebase.database
     private val postDatabaseReference = database.getReference("posts")
     val postsLiveData = MutableLiveData<ArrayList<PostsDtoItem?>>(arrayListOf())
-
     val size = mutableStateOf(0)
 
     init {
@@ -23,8 +22,6 @@ class LinkedInRepository {
     }
 
     fun setListener() {
-
-
         postDatabaseReference.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val data = snapshot.getValue(PostsDtoItem::class.java)
@@ -58,5 +55,12 @@ class LinkedInRepository {
 
     }
 
+
+    fun addPost(
+        data: PostsDtoItem
+    ) {
+        val newPostRef = postDatabaseReference.push()
+        newPostRef.setValue(data)
+    }
 
 }

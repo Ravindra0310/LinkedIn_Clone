@@ -1,7 +1,7 @@
 package com.example.jobedin.data.remote.dto
 
 data class PostsDtoItem(
-    val likes: Int? = null,
+    val likes: Int? = 0,
     val postText: String? = "nan",
     val postVideo: String? = null,
     val profilePic: String? = null,
