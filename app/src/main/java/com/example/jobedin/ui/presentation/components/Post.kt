@@ -111,7 +111,7 @@ fun Post(
                 )
             }
         } else if (postVideo != null && postVideo != "nan") {
-            VideoPlayer(postVideo)
+        //    VideoPlayer(postVideo)
         }
         Spacer(modifier = Modifier.size(10.dp))
         Row {

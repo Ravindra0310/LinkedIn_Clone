@@ -6,6 +6,8 @@ plugins {
     id("dagger.hilt.android.plugin")
     id 'com.google.gms.google-services'
 }
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
 /*apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'*/
 apply plugin: "androidx.navigation.safeargs.kotlin"
@@ -119,6 +121,7 @@ dependencies {
 
 
 
+
     implementation 'com.google.firebase:firebase-storage:20.0.0'
 
     implementation 'com.google.code.gson:gson:2.8.7'
@@ -138,5 +141,6 @@ dependencies {
     // If you want to additionally use the CameraX Extensions library
     implementation "androidx.camera:camera-extensions:1.0.0-alpha25"
     implementation 'com.google.android.exoplayer:exoplayer:2.14.1'
+
 
 }

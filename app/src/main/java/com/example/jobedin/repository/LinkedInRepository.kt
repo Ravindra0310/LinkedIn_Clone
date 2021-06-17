@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import com.example.jobedin.MainActivity
 import com.example.jobedin.data.remote.dto.PostsDtoItem
+import com.example.jobedin.data.remote.dto.UserDto
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,6 +26,7 @@ class LinkedInRepository {
     var storageReference = firebaseStorage.getReference("post_images")
 
 
+
     init {
         setListener()
     }
@@ -33,11 +35,13 @@ class LinkedInRepository {
         postDatabaseReference.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val data = snapshot.getValue(PostsDtoItem::class.java)
+
                 if (postsLiveData.value.isNullOrEmpty()) {
                     postsLiveData.value?.add(data)
                 } else {
                     postsLiveData.value?.add(0, data)
                 }
+
                 size.value = postsLiveData.value?.size ?: 0
                 Log.d("dasda", "${postsLiveData.value?.get(0)?.userName}")
                 Log.d("dasda", "${postsLiveData.value?.size}")
@@ -117,4 +121,50 @@ class LinkedInRepository {
     }
 
 
+    private val userDatabaseReference = Firebase.database.getReference("Users")
+    val searchResults = mutableStateOf<ArrayList<UserDto>>(arrayListOf())
+    val resultSize = mutableStateOf(0)
+
+    fun searchForUser(name: String) {
+        resultSize.value = 0
+        searchResults.value = arrayListOf()
+
+
+        userDatabaseReference.orderByChild("name").equalTo(name)
+            .addChildEventListener(object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+
+                    val data = snapshot.getValue(UserDto::class.java)
+
+                    if (data != null) {
+                        searchResults.value?.add(data)
+                    }
+                    resultSize.value = searchResults.value?.size ?: 0
+
+                    if (data != null) {
+                        Log.d("asdas", "${data.name}")
+                    }
+                    Log.d("dasda", "${searchResults.value?.size ?: 0}")
+
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+
+            })
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.jobedin.ui.presentation.homeScreen
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.jobedin.data.remote.dto.PostsDtoItem
 import com.example.jobedin.repository.LinkedInRepository
@@ -9,7 +10,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    repository: LinkedInRepository
+    val repository: LinkedInRepository
 ) : ViewModel() {
 
     val posts = repository.postsLiveData
@@ -28,6 +29,12 @@ class HomeScreenViewModel @Inject constructor(
         posts.value?.add(daata)
         Log.d("sdfs", "${posts.value?.size}")
         number.value = posts.value?.size ?: 0
+    }
+
+    val currentQueryText = mutableStateOf("")
+
+    fun doSearch(query: String) {
+        repository.searchForUser(query)
     }
 
 
