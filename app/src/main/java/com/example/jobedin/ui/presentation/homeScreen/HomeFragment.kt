@@ -61,9 +61,6 @@ class HomeFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                Column(
-                    modifier = Modifier.background(Color(0xFFE9E6DF))
-
                 val toolbarHeight = 42.dp
                 val toolbarHeightPx =
                     with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }

@@ -32,7 +32,7 @@
             android:name=".chat.Adapter.ChatMessageActivity"
             android:exported="true" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".DashboardActivity"
             android:exported="true" />
         <activity
             android:name=".JoinActivity"
@@ -49,17 +49,11 @@
         <activity
             android:name=".chat.Adapter.ChatActivity"
             android:exported="true">
-           <!-- <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
         </activity>
         <activity
-            android:name=".DashboardActivity"
+            android:name=".SplashScreen"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.JobedIn.NoActionBar" />
             android:theme="@style/Theme.JobedIn.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
