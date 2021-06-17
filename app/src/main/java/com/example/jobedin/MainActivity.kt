@@ -2,6 +2,7 @@ package com.example.jobedin
 
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -22,10 +23,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navController =findNavController(R.id.fragmentContainerView)
+        val navController = findNavController(R.id.fragmentContainerView)
 
         binding.bottomNavigationView.setupWithNavController(navController)
 
     }
+
+    fun hideBottomNavi() {
+        binding.bottomNavigationView.visibility = View.GONE
+    }
+
+    fun showBottomNavi() {
+        binding.bottomNavigationView.visibility = View.VISIBLE
+    }
+
 }
 

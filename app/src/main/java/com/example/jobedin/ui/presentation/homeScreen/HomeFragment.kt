@@ -1,5 +1,6 @@
 package com.example.jobedin.ui.presentation.homeScreen
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -36,7 +38,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,6 +45,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.jobedin.R
+import com.example.jobedin.chat.Adapter.ChatActivity
 import com.example.jobedin.ui.presentation.components.Post
 import com.example.jobedin.ui.theme.RobotoFontFamily
 import com.example.jobedin.util.loadPicture
@@ -59,6 +61,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return ComposeView(requireContext()).apply {
             setContent {
 
@@ -108,7 +111,10 @@ class HomeFragment : Fragment() {
                                 tags = posts!![post]?.tags,
                                 postImage = posts!![post]?.postImage ?: "nan",
                                 postVideo = posts!![post]?.postVideo,
-                                likes = "${posts!![post]?.likes}"
+                                likes = "${posts!![post]?.likes}",
+                                sharepost = {
+
+                                }
                             )
                             Spacer(modifier = Modifier.size(3.dp))
                         }
@@ -125,6 +131,12 @@ class HomeFragment : Fragment() {
                             }, onSearchExecute = {
                             viewModel.doSearch(it)
                             navigateToSearch()
+                        }, goToChat = {
+                           // startActivity(Intent(activity, ChatActivity::class.java))
+                            val action =
+                                HomeFragmentDirections.actionHomeFragmentToAllConversationFragment()
+                            findNavController().navigate(action)
+
                         })
                 }
             }
@@ -144,13 +156,13 @@ val userImage =
     "https://yt3.ggpht.com/ytc/AAUvwnix1W5yfYHFVUru51TRhdeSyFkMhglTrBp_IYP1qA=s900-c-k-c0x00ffffff-no-rj"
 
 
-
 @Composable
 fun TopBar(
     currentText: String,
     onTextChanged: (String) -> Unit,
     onSearchExecute: (String) -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
+    goToChat: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -184,7 +196,10 @@ fun TopBar(
 
         Image(
             painter = painterResource(id = R.drawable.ic_messagefill),
-            contentDescription = "Message icon"
+            contentDescription = "Message icon",
+            modifier = Modifier.clickable {
+                goToChat()
+            }
         )
 
     }
@@ -208,7 +223,7 @@ fun SearchBar(
         Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
             Spacer(modifier = Modifier.size(9.dp))
             Image(
-                painter = painterResource(id = R.drawable.ic_search_mag),
+                painter = painterResource(id = R.drawable.ic_search),
                 contentDescription = "Search Icon",
                 modifier = Modifier.size(16.dp)
             )
@@ -359,8 +374,8 @@ fun StoriesRow() {
     Spacer(modifier = Modifier.size(8.dp))
 }
 
-@Preview
-@Composable
-fun ComposablePreview() {
-    TopBar("", {}, {}, Modifier)
-}
+//@Preview
+//@Composable
+//fun ComposablePreview() {
+//    TopBar("", {}, {}, Modifier)
+//}

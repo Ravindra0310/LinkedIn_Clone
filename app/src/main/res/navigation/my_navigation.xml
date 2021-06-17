@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_chatActivity2"
+            app:destination="@id/chatActivity2" />
+        <action
+            android:id="@+id/action_homeFragment_to_allConversationFragment"
+            app:destination="@id/allConversationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
@@ -53,4 +59,26 @@
         android:name="com.example.jobedin.fragments.JobsFragment"
         android:label="fragment_jobs"
         tools:layout="@layout/fragment_jobs" />
+    <activity
+        android:id="@+id/chatActivity2"
+        android:name="com.example.jobedin.chat.Adapter.ChatActivity"
+        android:label="ChatActivity" />
+    <fragment
+        android:id="@+id/allConversationFragment"
+        android:name="com.example.jobedin.ui.presentation.allConversation.AllConversationFragment"
+        android:label="fragment_all_conversation"
+        tools:layout="@layout/fragment_all_conversation" >
+        <action
+            android:id="@+id/action_allConversationFragment_to_chatFragmentNew"
+            app:destination="@id/chatFragmentNew" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragmentNew"
+        android:name="com.example.jobedin.ui.presentation.chatScreen.ChatFragmentNew"
+        android:label="fragment_chat_new"
+        tools:layout="@layout/fragment_chat_new" >
+        <argument
+            android:name="UserDetailParcel"
+            app:argType="com.example.jobedin.ui.presentation.parcelables.UserDetailParcel" />
+    </fragment>
 </navigation>

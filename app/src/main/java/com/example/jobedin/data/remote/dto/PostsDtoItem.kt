@@ -10,4 +10,5 @@ data class PostsDtoItem(
     val time: String? = null,
     val userName: String? = null,
     val postImage: String? = null,
+    var uniqueKey:String?=null
 )

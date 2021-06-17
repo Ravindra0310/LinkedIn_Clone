@@ -26,7 +26,6 @@ class LinkedInRepository {
     var storageReference = firebaseStorage.getReference("post_images")
 
 
-
     init {
         setListener()
     }
@@ -35,6 +34,7 @@ class LinkedInRepository {
         postDatabaseReference.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val data = snapshot.getValue(PostsDtoItem::class.java)
+                data?.uniqueKey = snapshot.key
 
                 if (postsLiveData.value.isNullOrEmpty()) {
                     postsLiveData.value?.add(data)

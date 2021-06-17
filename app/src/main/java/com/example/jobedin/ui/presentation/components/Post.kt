@@ -35,7 +35,8 @@ fun Post(
     tags: String?,
     postImage: String?,
     postVideo: String?,
-    likes: String
+    likes: String,
+    sharepost:() -> Unit
 ) {
 
     var showFull by remember {
@@ -156,19 +157,19 @@ fun Post(
             color = PostDesColorGrey,
             modifier = Modifier.padding(start = 10.dp, end = 10.dp)
         )
-        postButtons()
+        postButtons(sharepost=sharepost)
 
     }
 
 }
 
 @Composable
-fun postButtons() {
+fun postButtons(sharepost: () -> Unit) {
     Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
-        PostButtonItem(R.drawable.ic_like, name = "Like")
-        PostButtonItem(R.drawable.ic_comment, name = "Comment")
-        PostButtonItem(R.drawable.ic_share, name = "share")
-        PostButtonItem(R.drawable.ic_send, name = "send")
+        PostButtonItem(R.drawable.ic_like, name = "Like",onClick = {})
+        PostButtonItem(R.drawable.ic_comment, name = "Comment",onClick = {})
+        PostButtonItem(R.drawable.ic_share, name = "share",onClick = sharepost)
+        PostButtonItem(R.drawable.ic_send, name = "send",onClick = {})
     }
 
 }
@@ -176,11 +177,14 @@ fun postButtons() {
 @Composable
 fun PostButtonItem(
     src: Int,
-    name: String
+    name: String,
+    onClick:()->Unit
 ) {
     Column(
-        modifier = Modifier.height(42.dp),
-        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.height(42.dp).clickable {
+            onClick()
+        }
+        ,verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
