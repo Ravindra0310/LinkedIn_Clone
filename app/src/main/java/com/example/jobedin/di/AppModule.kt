@@ -15,6 +15,7 @@ class AppModule {
     @Provides
     fun providesRepository(): LinkedInRepository {
         return LinkedInRepository()
+        
     }
 
 }

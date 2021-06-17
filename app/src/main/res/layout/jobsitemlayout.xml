@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="30dp"
+    android:layout_marginBottom="2dp"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivJobImageLogo"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:scaleType="fitXY"
+            android:layout_margin="17dp"
+            android:src="@drawable/bgimage"/>
+        <TextView
+            android:id="@+id/tvJobTextHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:text="Android Developer"
+            android:textSize="17sp"
+            android:textColor="#141313"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/ivJobImageLogo"
+            />
+        <TextView
+            android:id="@+id/tvCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cliffex LLC"
+            android:textSize="14.5sp"
+            android:layout_toRightOf="@+id/ivJobImageLogo"
+            android:layout_below="@+id/tvJobTextHeader"/>
+        <TextView
+            android:id="@+id/tvJobLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Noida Utter predesh India"
+            android:textSize="12.5sp"
+            android:layout_marginBottom="8dp"
+            android:layout_toRightOf="@id/ivJobImageLogo"
+            android:layout_below="@+id/tvCompanyName"/>
+        <TextView
+            android:id="@+id/tvJobPostTiming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 week ago"
+            android:layout_toRightOf="@id/ivJobImageLogo"
+            android:layout_below="@id/tvJobLocation"
+            android:textSize="10sp"
+            />
+        <ImageView
+            android:id="@+id/ivLinkedInSmallLogo"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/linkedin_logo"
+            android:layout_toRightOf="@id/tvJobPostTiming"
+            android:layout_below="@+id/tvJobLocation"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Easy Apply"
+            android:textSize="10sp"
+            android:layout_toRightOf="@id/ivLinkedInSmallLogo"
+            android:layout_below="@+id/tvJobLocation"/>
+        <ImageView
+            android:id="@+id/ivSavedJobs"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_saved_job"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

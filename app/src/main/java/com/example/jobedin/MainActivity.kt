@@ -2,12 +2,11 @@ package com.example.jobedin
 
 import android.net.Uri
 import android.os.Bundle
-
 import androidx.appcompat.app.AppCompatActivity
-import com.example.jobedin.repository.LinkedInRepository
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.example.jobedin.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -17,9 +16,15 @@ class MainActivity : AppCompatActivity() {
         var tempPicPath: Uri? = null
     }
 
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val navController =findNavController(R.id.fragmentContainerView)
+
+        binding.bottomNavigationView.setupWithNavController(navController)
 
     }
 }

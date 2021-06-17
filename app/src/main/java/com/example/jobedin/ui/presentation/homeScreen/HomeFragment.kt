@@ -66,7 +66,6 @@ class HomeFragment : Fragment() {
                 val toolbarHeightPx =
                     with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }
                 val toolbarOffsetHeightPx = remember { mutableStateOf(0f) }
-
                 val nestedScrollConnection = remember {
                     object : NestedScrollConnection {
                         override fun onPreScroll(
@@ -209,7 +208,7 @@ fun SearchBar(
         Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
             Spacer(modifier = Modifier.size(9.dp))
             Image(
-                painter = painterResource(id = R.drawable.ic_search),
+                painter = painterResource(id = R.drawable.ic_search_mag),
                 contentDescription = "Search Icon",
                 modifier = Modifier.size(16.dp)
             )
@@ -328,7 +327,7 @@ fun StoriesRow() {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Box(modifier = Modifier.size(120.dp)) {
+                    Box(modifier = Modifier.size(57.dp)) {
                         loadPicture(
                             url = userImage,
                             defaultImage = R.drawable.ic_comment

@@ -38,4 +38,19 @@
         android:name="com.example.jobedin.ui.presentation.searchFragment.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/networkFragment2"
+        android:name="com.example.jobedin.fragments.NetworkFragment"
+        android:label="fragment_network"
+        tools:layout="@layout/fragment_network" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.example.jobedin.fragments.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/jobsFragment"
+        android:name="com.example.jobedin.fragments.JobsFragment"
+        android:label="fragment_jobs"
+        tools:layout="@layout/fragment_jobs" />
 </navigation>

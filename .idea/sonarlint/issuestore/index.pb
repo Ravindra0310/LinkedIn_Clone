@@ -13,8 +13,6 @@ x
 Happ/src/main/java/com/example/jobedin/ui/presentation/homeScreen/test.kt,1\d\1dc51ba879b063d948088cd000cb1867677610e0
 
 Oapp/src/main/java/com/example/jobedin/ui/presentation/components/VideoPlayer.kt,f\0\f0b06472b5665d5a56f5adec24738231a0823b93
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 a
 1app/src/main/java/com/example/jobedin/LinkedIn.kt,c\f\cf4171ad6538fb9142f07d6c6743079ab24f4d88
 u
