@@ -1,7 +1,6 @@
 package com.example.jobedin.ui.presentation.homeScreen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,10 +46,8 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return ComposeView(requireContext()).apply {
             setContent {
-
                 Column(
                     modifier = Modifier.background(Color(0xFFE9E6DF))
                 ) {
@@ -93,6 +90,7 @@ class HomeFragment : Fragment() {
 val userImage =
     "https://yt3.ggpht.com/ytc/AAUvwnix1W5yfYHFVUru51TRhdeSyFkMhglTrBp_IYP1qA=s900-c-k-c0x00ffffff-no-rj"
 
+@Preview
 @Composable
 fun StoriesRow() {
     Spacer(modifier = Modifier.size(8.dp))
@@ -169,7 +167,7 @@ fun StoriesRow() {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Box(modifier = Modifier.size(57.dp)) {
+                    Box(modifier = Modifier.size(120.dp)) {
                         loadPicture(
                             url = userImage,
                             defaultImage = R.drawable.ic_comment
@@ -178,7 +176,7 @@ fun StoriesRow() {
                                 bitmap = it.asImageBitmap(),
                                 contentDescription = "user Stories",
                                 modifier = Modifier
-                                    .size(52.dp)
+                                    .size(120.dp)
                                     .clip(CircleShape)
                             )
 
@@ -200,7 +198,6 @@ fun StoriesRow() {
 
     Spacer(modifier = Modifier.size(8.dp))
 }
-//
 
 @Preview
 @Composable

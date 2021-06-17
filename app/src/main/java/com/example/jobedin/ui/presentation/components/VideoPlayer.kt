@@ -2,79 +2,51 @@ package com.example.jobedin.ui.presentation.components
 
 import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.MediaSourceFactory
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
+import com.google.android.exoplayer2.util.Util
+
 
 @Composable
-fun VideoPlayer(
-    url: String
-) {
+fun VideoPlayer(sourceUrl: String) {
+    // This is the official way to access current context from Composable functions
     val context = LocalContext.current
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
 
-    var autoPlay by remember { mutableStateOf(true) }
-    var window by remember { mutableStateOf(0) }
-    var position by remember { mutableStateOf(0L) }
-
-
-
-    val player = remember {
-        val player = SimpleExoPlayer.Builder(context)
-            .build()
-
-        val defaultHttpDataSourceFactory = DefaultHttpDataSourceFactory("test")
-        player.prepare(
-            HlsMediaSource.Factory(defaultHttpDataSourceFactory)
-                .createMediaSource(Uri.parse(url))
-        )
-        player.playWhenReady = autoPlay
-        player.seekTo(window, position)
-        player
+    // Do not recreate the player everytime this Composable commits
+    val exoPlayer = remember {
+        SimpleExoPlayer.Builder(context).build()
     }
 
+    // We only want to react to changes in sourceUrl.
+    // This effect will be executed at each commit phase if
+    // [sourceUrl] has changed.
+    LaunchedEffect(sourceUrl) {
+        val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(context,
+            Util.getUserAgent(context, context.packageName))
 
+        val source = ProgressiveMediaSource.Factory(dataSourceFactory)
+            .createMediaSource(Uri.parse(
+                // Big Buck Bunny from Blender Project
+                sourceUrl
+            ))
 
-    fun updateState() {
-        autoPlay = player.playWhenReady
-        window = player.currentWindowIndex
-        position = 0L.coerceAtLeast(player.contentPosition)
+        exoPlayer.prepare(source)
     }
 
-    val playerView: PlayerView = remember {
-        val playerView = PlayerView(context)
-        lifecycle.addObserver(object : LifecycleObserver {
-            @OnLifecycleEvent(Lifecycle.Event.ON_START)
-            fun onStart() {
-                playerView.onResume()
-                player.playWhenReady = autoPlay
-            }
-
-            @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-            fun onStop() {
-                updateState()
-                playerView.onPause()
-                player.playWhenReady = false
-            }
-        })
-        playerView
-    }
-
-
-    AndroidView(
-        factory = { playerView },
-        modifier = Modifier
-            .fillMaxWidth()
-    ) { _ ->
-        playerView.player = player
-    }
 }

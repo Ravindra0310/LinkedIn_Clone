@@ -3,6 +3,7 @@ package com.example.jobedin.util
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -31,6 +32,36 @@ fun loadPicture(
     })
 
     Glide.with(context).asBitmap().load(url).into(object : CustomTarget<Bitmap>() {
+        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+            bitmapState.value = resource
+        }
+
+        override fun onLoadCleared(placeholder: Drawable?) {
+        }
+    })
+
+    return bitmapState
+}
+
+@SuppressLint("UnrememberedMutableState")
+@Composable
+fun loadPicture(
+    uri: Uri?,
+    @DrawableRes defaultImage: Int,
+): MutableState<Bitmap?> {
+
+    val bitmapState: MutableState<Bitmap?> = mutableStateOf(null)
+    val context = LocalContext.current
+    Glide.with(context).asBitmap().load(defaultImage).into(object : CustomTarget<Bitmap>() {
+        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+            bitmapState.value = resource
+        }
+
+        override fun onLoadCleared(placeholder: Drawable?) {
+        }
+    })
+
+    Glide.with(context).asBitmap().load(uri).into(object : CustomTarget<Bitmap>() {
         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
             bitmapState.value = resource
         }
