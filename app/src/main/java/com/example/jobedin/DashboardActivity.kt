@@ -11,12 +11,13 @@ import com.example.jobedin.fragments.*
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -34,12 +35,15 @@ class DashboardActivity : AppCompatActivity() {
                 R.id.nav_post -> setCurrentFragment(thirdFragment)
                 R.id.nav_notification -> setCurrentFragment(fourFragment)
                 R.id.nav_job -> setCurrentFragment(fiveFragment)
-
             }
             true
         }
 
+
     }
+
+
+
     private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.flFragment, fragment)

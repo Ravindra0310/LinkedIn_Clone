@@ -9,6 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JobedIn">
+
+        <service android:name=".firebase.FirebaseService"
+            android:permission="com.google.android.c2dm.permission.SEND">
+
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+
+        </service>
+
+        <activity
+            android:name=".chat.Adapter.ChatMessageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SplashScreen"
+            android:exported="true" />
         <activity
             android:name=".JoinActivity"
             android:exported="true" />
@@ -18,11 +35,11 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true" />
-        <activity android:name=".LinkedIn"
-            android:exported="true"/>
-
         <activity
-            android:name=".SplashScreen"
+            android:name=".LinkedIn"
+            android:exported="true" />
+        <activity
+            android:name=".chat.Adapter.ChatActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,8 +51,7 @@
             android:name=".DashboardActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.JobedIn.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.JobedIn.NoActionBar" />
     </application>
 
 </manifest>
