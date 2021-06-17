@@ -5,6 +5,13 @@
       <map>
         <entry key="..\:/LinkedIn_Clone/app/src/main/res/layout/activity_linked_in.xml" value="0.24139492753623187" />
         <entry key="..\:/LinkedIn_Clone/app/src/main/res/layout/activity_main.xml" value="0.24139492753623187" />
+        <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/activity_chat.xml" value="0.1" />
+        <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/activity_chat_message.xml" value="0.22" />
+        <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/chatlist_item.xml" value="0.11065573770491803" />
+        <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/fragment_network.xml" value="0.1325136612021858" />
+        <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/iteam_left.xml" value="0.21" />
+        <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/iteam_rigth.xml" value="0.11065573770491803" />
+        <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/menu/menu_nav.xml" value="0.1" />
         <entry key="..\:/Users/karth/AndroidStudioProjects/LinkedIn_Clone/app/src/main/res/drawable/ic_celebrate.xml" value="0.3182291666666667" />
         <entry key="..\:/Users/karth/AndroidStudioProjects/LinkedIn_Clone/app/src/main/res/drawable/ic_comment.xml" value="0.2515625" />
         <entry key="..\:/Users/karth/AndroidStudioProjects/LinkedIn_Clone/app/src/main/res/drawable/ic_document.xml" value="0.3182291666666667" />
