@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -28,22 +29,19 @@ class DashboardActivity : AppCompatActivity() {
         val thirdFragment=PostFragment()
         val fourFragment=NotificationFragment()
         val fiveFragment=JobsFragment()
-        navigationBar.setOnNavigationItemSelectedListener {
+        /*navigationBar.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.nav_home -> setCurrentFragment(firstFragment)
+             *//*   R.id.nav_home -> setCurrentFragment(firstFragment)
                 R.id.nav_network -> setCurrentFragment(secondFragment)
                 R.id.nav_post -> setCurrentFragment(thirdFragment)
                 R.id.nav_notification -> setCurrentFragment(fourFragment)
                 R.id.nav_job -> setCurrentFragment(fiveFragment)
+*//*
             }
             true
-        }
-
+        }*/
 
     }
-
-
-
     private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.flFragment, fragment)

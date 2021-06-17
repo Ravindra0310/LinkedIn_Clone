@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/nav_home"
-    android:title="Home"
-    android:icon="@drawable/ic_home"/>
-    <item android:id="@+id/nav_network"
-        android:title="My Network"
-        android:icon="@drawable/ic_group"/>
-    <item android:id="@+id/nav_post"
-        android:title="Post"
-        android:icon="@drawable/ic_plus_sign"/>
-    <item android:id="@+id/nav_notification"
-        android:title="Notification"
-        android:icon="@drawable/ic_notification"/>
-    <item android:id="@+id/nav_job"
-        android:title="Jobs"
-        android:icon="@drawable/ic_suitcase"/>
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/networkFragment"
+        android:icon="@drawable/ic_group"
+        android:title="My Network" />
+    <item
+        android:id="@+id/addPostFragment"
+        android:icon="@drawable/ic_plus_sign"
+        android:title="Post" />
+    <item
+        android:id="@+id/notificationFragment"
+        android:icon="@drawable/ic_notification"
+        android:title="Notification" />
+    <item
+        android:id="@+id/jobsFragment"
+        android:icon="@drawable/ic_suitcase"
+        android:title="Jobs" />
 </menu>

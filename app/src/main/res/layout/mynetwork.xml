@@ -1,0 +1,94 @@
+
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+   android:layout_margin="5dp"
+    android:elevation="100dp"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivBackGroundImage"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:src="@drawable/sachin"
+            android:scaleType="fitXY"
+            />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivCircularImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/nrupul"
+            />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivCircularImageCross"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_croos_vector_img"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:id="@+id/tvName1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/ivCircularImage"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:text="Nrupul Dev"
+            />
+        <TextView
+            android:id="@+id/tvProfileDescreption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_below="@id/tvName1"
+            android:layout_marginTop="3dp"
+            android:text="founder and ceo"
+            />
+        <TextView
+        android:id="@+id/tvConnections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tvProfileDescreption"
+        android:layout_marginTop="3dp"
+        android:textSize="12sp"
+        android:text="2 mutual friends"
+        />
+        <TextView
+            android:textAlignment="center"
+            android:id="@+id/btnConnect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tvConnections"
+            android:background="@drawable/design_connect_button"
+            android:text="Connect"
+            android:paddingTop="6dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:textStyle="bold"
+            android:paddingBottom="6dp"
+            android:textAllCaps="false"
+            android:textColor="#0583ea"
+            android:textSize="15dp"
+             />
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
+
