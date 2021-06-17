@@ -1,11 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'kotlin-parcelize'
-    id("dagger.hilt.android.plugin")
     id 'com.google.gms.google-services'
+    id("kotlin-android-extensions")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
+
 }
+
+
 
 android {
     compileSdk 30
@@ -120,6 +123,8 @@ dependencies {
     implementation "com.google.accompanist:accompanist-glide:0.9.0"
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    //circularImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 
 }

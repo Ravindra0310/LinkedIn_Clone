@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import com.example.jobedin.fragments.*
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.activity_dashboard.*
 
 
 class DashboardActivity : AppCompatActivity() {
