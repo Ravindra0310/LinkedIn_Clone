@@ -1,5 +1,6 @@
 package com.example.jobedin.ui.presentation.addPostScreen
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import com.example.jobedin.MainActivity
 import com.example.jobedin.R
 import com.example.jobedin.ui.presentation.homeScreen.userImage
 import com.example.jobedin.ui.theme.PostDesColorGrey
@@ -45,11 +49,18 @@ class AddPostFragment : Fragment() {
 
     private val viewModel by viewModels<AddPostVIewModel>()
 
+    companion object {
+        public lateinit var navController: NavController
+    }
+
     @ExperimentalMaterialApi
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        navController = findNavController()
+
 
         return ComposeView(requireContext()).apply {
             setContent {
@@ -97,6 +108,11 @@ class AddPostFragment : Fragment() {
                                         coroutineScope.launch {
                                             bottomSheetScaffoldState.bottomSheetState.collapse()
                                             viewModel.showBottomBar.value = true
+                                        }
+                                    } else {
+                                        coroutineScope.launch {
+                                            bottomSheetScaffoldState.bottomSheetState.expand()
+                                            viewModel.showBottomBar.value = false
                                         }
                                     }
                                 }
@@ -167,8 +183,6 @@ fun AddPostTopBar(
                     onClick()
                 }
             )
-
-
         }
     }
 }
@@ -234,7 +248,6 @@ fun AddPostBottomBar() {
 
 var userName = "username"
 
-
 @Composable
 fun BottomSheet(
 ) {
@@ -245,9 +258,14 @@ fun BottomSheet(
             .clip(RoundedCornerShape(topStart = 17.dp, topEnd = 17.dp))
     ) {
         Column(
-            modifier = Modifier.padding(start = 13.dp, end = 13.dp, top = 20.dp),
-            verticalArrangement = Arrangement.SpaceEvenly
-        ) {
+            modifier = Modifier
+                .padding(start = 13.dp, end = 13.dp, top = 20.dp)
+                .clickable {
+
+                },
+            verticalArrangement = Arrangement.SpaceEvenly,
+
+            ) {
             (BottomSheetItems).forEach { item ->
                 BottomSheetItem(item.icon, item.name)
             }
@@ -274,7 +292,6 @@ data class BottomSheetItemModel(
     val name: String
 )
 
-
 @Composable
 fun BottomSheetItem(
     icon: Int,
@@ -286,7 +303,14 @@ fun BottomSheetItem(
     ) {
         Image(
             painter = painterResource(id = icon), contentDescription = "image of $name",
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier
+                .size(24.dp)
+                .clickable {
+                    if (name == "Add a photo.") {
+                        //open the camera fragment
+                        navigateToCameraFragment()
+                    }
+                }
         )
         Spacer(modifier = Modifier.size(15.dp))
 
@@ -298,9 +322,12 @@ fun BottomSheetItem(
         )
 
     }
-
 }
 
+fun navigateToCameraFragment() {
+    val action = AddPostFragmentDirections.actionAddPostFragmentToCameraFragment()
+    AddPostFragment.navController.navigate(action)
+}
 
 @Composable
 fun AddPostTextArea(
@@ -338,7 +365,23 @@ fun AddPostTextArea(
                 )
             }
         }
+        Spacer(modifier = Modifier.size(20.dp))
+        loadPicture(
+            MainActivity.tempPicPath,
+            R.drawable.ic_share
+        ).value?.let {
+            Image(
+                bitmap = it.asImageBitmap(),
+                contentDescription = "header of use $userName",
+                modifier = Modifier
+                    //.clip(CircleShape)
+                    .size(150.dp)
+                    .fillMaxHeight(200f)
+                    .fillMaxWidth()
+            )
+        }
     }
+
 }
 
 

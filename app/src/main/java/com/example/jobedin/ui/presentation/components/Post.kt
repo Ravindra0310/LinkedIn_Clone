@@ -22,6 +22,7 @@ import com.example.jobedin.R
 import com.example.jobedin.ui.theme.PostDesColorGrey
 import com.example.jobedin.ui.theme.RobotoFontFamily
 import com.example.jobedin.util.loadPicture
+import com.google.android.exoplayer2.ExoPlayer
 
 
 @Composable

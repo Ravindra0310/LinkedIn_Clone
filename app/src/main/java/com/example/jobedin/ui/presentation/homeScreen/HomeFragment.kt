@@ -61,6 +61,9 @@ class HomeFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
+                Column(
+                    modifier = Modifier.background(Color(0xFFE9E6DF))
+
                 val toolbarHeight = 42.dp
                 val toolbarHeightPx =
                     with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }
@@ -85,6 +88,7 @@ class HomeFragment : Fragment() {
                         .background(Color(0xFFE9E6DF))
                         .fillMaxSize()
                         .nestedScroll(nestedScrollConnection)
+
                 ) {
                     val posts by viewModel.posts.observeAsState()
 
@@ -141,6 +145,7 @@ class HomeFragment : Fragment() {
 
 val userImage =
     "https://yt3.ggpht.com/ytc/AAUvwnix1W5yfYHFVUru51TRhdeSyFkMhglTrBp_IYP1qA=s900-c-k-c0x00ffffff-no-rj"
+
 
 
 @Composable
@@ -325,7 +330,7 @@ fun StoriesRow() {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Box(modifier = Modifier.size(57.dp)) {
+                    Box(modifier = Modifier.size(120.dp)) {
                         loadPicture(
                             url = userImage,
                             defaultImage = R.drawable.ic_comment
@@ -334,7 +339,7 @@ fun StoriesRow() {
                                 bitmap = it.asImageBitmap(),
                                 contentDescription = "user Stories",
                                 modifier = Modifier
-                                    .size(52.dp)
+                                    .size(120.dp)
                                     .clip(CircleShape)
                             )
 
@@ -356,7 +361,6 @@ fun StoriesRow() {
 
     Spacer(modifier = Modifier.size(8.dp))
 }
-//
 
 @Preview
 @Composable

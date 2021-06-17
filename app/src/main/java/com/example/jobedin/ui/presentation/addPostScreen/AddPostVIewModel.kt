@@ -1,7 +1,9 @@
 package com.example.jobedin.ui.presentation.addPostScreen
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.jobedin.MainActivity
 import com.example.jobedin.data.remote.dto.PostsDtoItem
 import com.example.jobedin.repository.LinkedInRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,14 +22,36 @@ class AddPostVIewModel @Inject constructor(
     }
 
     fun addPost() {
-        repository.addPost(
-            PostsDtoItem(
-                postText = currentText.value,
-                subDis1 = "Android Developer",
-                time = "Just now",
-                userName = "user name"
+        val type = MainActivity.tempFileExt;
+        if (type == "jpg" || type == "bmp" || type == "jpeg" || type == "png") {
+            repository.uploadMedia(
+                MainActivity.tempPicPath, type, PostsDtoItem(
+                    postText = currentText.value,
+                    subDis1 = "Android Developer",
+                    time = "Just now",
+                    userName = "user name",
+                )
             )
-        )
+        } else if (type == "mp4" || type == "mkv" || type == "webm" || type == "3gp") {
+            repository.uploadMedia(
+                MainActivity.tempPicPath, type, PostsDtoItem(
+                    postText = currentText.value,
+                    subDis1 = "Android Developer",
+                    time = "Just now",
+                    userName = "user name",
+                )
+            )
+        } else {
+            repository.addPost(
+                PostsDtoItem(
+                    postText = currentText.value,
+                    subDis1 = "Android Developer",
+                    time = "Just now",
+                    userName = "user name",
+                )
+            )
+        }
+
     }
 
 }

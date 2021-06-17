@@ -10,6 +10,7 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 
 /*apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'*/
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdk 30
@@ -68,7 +69,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     implementation platform('com.google.firebase:firebase-bom:28.1.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.0'
@@ -117,13 +119,28 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
+
+
+
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+
     implementation 'com.google.code.gson:gson:2.8.7'
 
     implementation 'com.google.android.exoplayer:exoplayer:2.14.0'
 
     implementation "com.google.accompanist:accompanist-insets:0.11.1"
 
-
+    def camerax_version = "1.0.0"
+    // The following line is optional, as the core library is included indirectly by camera-camera2
+    implementation "androidx.camera:camera-core:${camerax_version}"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+    // If you want to additionally use the CameraX Lifecycle library
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    // If you want to additionally use the CameraX View class
+    implementation "androidx.camera:camera-view:1.0.0-alpha25"
+    // If you want to additionally use the CameraX Extensions library
+    implementation "androidx.camera:camera-extensions:1.0.0-alpha25"
+    implementation 'com.google.android.exoplayer:exoplayer:2.14.1'
 
 
 }
