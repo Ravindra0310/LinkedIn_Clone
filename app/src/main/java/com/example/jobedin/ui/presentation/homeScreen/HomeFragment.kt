@@ -208,7 +208,7 @@ fun SearchBar(
         Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
             Spacer(modifier = Modifier.size(9.dp))
             Image(
-                painter = painterResource(id = R.drawable.ic_search),
+                painter = painterResource(id = R.drawable.ic_search_mag),
                 contentDescription = "Search Icon",
                 modifier = Modifier.size(16.dp)
             )

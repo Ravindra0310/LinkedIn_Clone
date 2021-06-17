@@ -26,17 +26,17 @@ class DashboardActivity : AppCompatActivity() {
         val thirdFragment=PostFragment()
         val fourFragment=NotificationFragment()
         val fiveFragment=JobsFragment()
-        navigationBar.setOnNavigationItemSelectedListener {
+        /*navigationBar.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.nav_home -> setCurrentFragment(firstFragment)
+             *//*   R.id.nav_home -> setCurrentFragment(firstFragment)
                 R.id.nav_network -> setCurrentFragment(secondFragment)
                 R.id.nav_post -> setCurrentFragment(thirdFragment)
                 R.id.nav_notification -> setCurrentFragment(fourFragment)
                 R.id.nav_job -> setCurrentFragment(fiveFragment)
-
+*//*
             }
             true
-        }
+        }*/
 
     }
     private fun setCurrentFragment(fragment: Fragment) =
