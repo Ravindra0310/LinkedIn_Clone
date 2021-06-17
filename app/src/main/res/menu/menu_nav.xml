@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_home"
         android:title="Home" />
     <item
-        android:id="@+id/networkFragment"
+        android:id="@+id/networkFragment2"
         android:icon="@drawable/ic_group"
         android:title="My Network" />
     <item

@@ -13,6 +13,7 @@ import com.example.jobedin.Model.PushNotification
 import com.example.jobedin.Model.User
 import com.example.jobedin.R
 import com.example.jobedin.chat.Adapter.restrofit.RetrofitInstance
+import com.example.jobedin.ui.presentation.homeScreen.userImage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -39,7 +40,9 @@ class ChatMessageActivity : AppCompatActivity() {
         var userId =intent.getStringExtra("UserId")
         var userName = intent.getStringExtra("userName")
 
+
         firebaseUser=FirebaseAuth.getInstance().currentUser
+
         reference=FirebaseDatabase.getInstance().getReference("Users").child(userId!!)
 
         reference!!.addValueEventListener(object : ValueEventListener {
@@ -75,17 +78,13 @@ class ChatMessageActivity : AppCompatActivity() {
                 }
 
             }
-
-
-
         }
-
         readMessage(firebaseUser!!.uid, userId)
     }
 
     private fun sendMessage(senderId: String, receiverId: String, message: String) {
         var reference: DatabaseReference? = FirebaseDatabase.getInstance().getReference()
-
+        var userphoto = intent.getStringExtra("photo")
         var hashMap: HashMap<String, String> = HashMap()
         hashMap.put("senderId", senderId)
         hashMap.put("receiverId", receiverId)
@@ -118,7 +117,6 @@ class ChatMessageActivity : AppCompatActivity() {
                 }
 
                 val chatAdapter = ChatAdapter(this@ChatMessageActivity, chatList)
-
                 chatRecyclerView.adapter = chatAdapter
             }
         })

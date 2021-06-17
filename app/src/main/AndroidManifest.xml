@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.jobedin">
 
     <uses-feature android:name="android.hardware.Camera.any" />
@@ -19,7 +20,8 @@
         android:theme="@style/Theme.JobedIn">
 
         <service android:name=".firebase.FirebaseService"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:permission="com.google.android.c2dm.permission.SEND"
+            tools:ignore="Instantiatable">
 
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -53,11 +55,11 @@
 
         <activity android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
 

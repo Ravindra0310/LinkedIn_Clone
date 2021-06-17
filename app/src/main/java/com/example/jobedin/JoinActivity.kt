@@ -57,7 +57,7 @@ class JoinActivity : AppCompatActivity() {
 
                     reference.child(uid).setValue(hashMap)
 
-                    startActivity(Intent(this,DashboardActivity::class.java))
+                    startActivity(Intent(this,MainActivity::class.java))
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.

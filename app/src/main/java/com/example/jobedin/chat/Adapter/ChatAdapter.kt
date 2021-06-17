@@ -43,7 +43,7 @@ class ChatAdapter(private val context: Context, private val chatList: ArrayList<
         val chat = chatList[position]
         holder.txtUserName.text = chat.message
         firebaseUser=FirebaseAuth.getInstance().currentUser
-//        Glide.with(context).load(firebaseUser!!.photoUrl).placeholder(R.drawable.manlogo).into(holder.imgUser)
+     Glide.with(context).load(firebaseUser!!.photoUrl).placeholder(R.drawable.manlogo).into(holder.imgUser)
 
     }
 
@@ -51,6 +51,7 @@ class ChatAdapter(private val context: Context, private val chatList: ArrayList<
 
         val txtUserName: TextView = view.findViewById(R.id.tvMessage)
         val imgUser: CircleImageView = view.findViewById(R.id.userImageRight)
+
     }
 
     override fun getItemViewType(position: Int): Int {

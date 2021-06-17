@@ -33,6 +33,7 @@ class ChatListAdapter(var userlist: ArrayList<User>, var context: Context,): Rec
                 val intent= Intent(context,ChatMessageActivity::class.java)
                 intent.putExtra("UserId",user.uid)
                 intent.putExtra("userName",user.name)
+                intent.putExtra("photo",user.image)
                 context.startActivity(intent)
             }
     }

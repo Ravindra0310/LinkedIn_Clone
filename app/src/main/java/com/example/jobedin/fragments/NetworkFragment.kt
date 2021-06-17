@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_network.*
 
 
 class NetworkFragment : Fragment() {
-    private var personalities: ArrayList<Personality>? = null
+    private var personalities: ArrayList<Personality>? = arrayListOf()
 
 
 

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_chatActivity2"
+            app:destination="@id/chatActivity2" />
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
@@ -53,4 +56,8 @@
         android:name="com.example.jobedin.fragments.JobsFragment"
         android:label="fragment_jobs"
         tools:layout="@layout/fragment_jobs" />
+    <activity
+        android:id="@+id/chatActivity2"
+        android:name="com.example.jobedin.chat.Adapter.ChatActivity"
+        android:label="ChatActivity" />
 </navigation>
