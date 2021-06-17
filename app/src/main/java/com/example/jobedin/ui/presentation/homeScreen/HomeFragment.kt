@@ -61,14 +61,11 @@ class HomeFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                Column(
-                    modifier = Modifier.background(Color(0xFFE9E6DF))
 
                 val toolbarHeight = 42.dp
                 val toolbarHeightPx =
                     with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }
                 val toolbarOffsetHeightPx = remember { mutableStateOf(0f) }
-
                 val nestedScrollConnection = remember {
                     object : NestedScrollConnection {
                         override fun onPreScroll(
@@ -330,7 +327,7 @@ fun StoriesRow() {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Box(modifier = Modifier.size(120.dp)) {
+                    Box(modifier = Modifier.size(57.dp)) {
                         loadPicture(
                             url = userImage,
                             defaultImage = R.drawable.ic_comment
