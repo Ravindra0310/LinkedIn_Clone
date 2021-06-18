@@ -42,7 +42,11 @@
         android:id="@+id/searchFragment"
         android:name="com.example.jobedin.ui.presentation.searchFragment.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_chatFragmentNew"
+            app:destination="@id/chatFragmentNew" />
+    </fragment>
     <fragment
         android:id="@+id/networkFragment2"
         android:name="com.example.jobedin.fragments.NetworkFragment"

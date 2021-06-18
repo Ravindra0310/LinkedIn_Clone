@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
@@ -15,6 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
@@ -105,7 +107,9 @@ fun DisplayMessage(
                 Image(
                     bitmap = it.asImageBitmap(),
                     contentDescription = "profile pic",
-                    modifier = Modifier.size(45.dp)
+                    modifier = Modifier
+                        .size(45.dp)
+                        .clip(CircleShape)
                 )
             }
             Spacer(modifier = Modifier.size(9.dp))
@@ -165,7 +169,7 @@ fun AllConversationFragmentTopBar() {
     ) {
 
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.CenterEnd) {
-            Row {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_edit),
                     contentDescription = "Edit",
@@ -175,7 +179,7 @@ fun AllConversationFragmentTopBar() {
                 Image(
                     painter = painterResource(id = R.drawable.ic_baseline_more_vert_24),
                     contentDescription = "three dot",
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(24.dp)
                 )
             }
         }
