@@ -38,7 +38,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,11 +52,11 @@ import com.example.jobedin.util.loadPicture
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.roundToInt
 
+
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private val viewModel by viewModels<HomeScreenViewModel>()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -114,7 +113,7 @@ class HomeFragment : Fragment() {
                                 postVideo = posts!![post]?.postVideo,
                                 likes = "${posts!![post]?.likes}",
                                 sharepost = {
-
+                                   sharePost(posts!![post]?.postText!!)
                                 }
                             )
                             Spacer(modifier = Modifier.size(3.dp))
@@ -138,6 +137,13 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun sharePost(postImage: String) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, postImage)
+        startActivity(intent)
     }
 
 

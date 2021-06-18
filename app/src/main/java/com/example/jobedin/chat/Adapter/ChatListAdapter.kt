@@ -11,13 +11,12 @@ import com.example.jobedin.Model.User
 import com.example.jobedin.R
 import kotlinx.android.synthetic.main.chatlist_item.view.*
 
-class ChatListAdapter(var userlist: ArrayList<User>, var context: Context,): RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder>() {
+class ChatListAdapter(var userlist: ArrayList<User>): RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder>() {
 
     class ChatListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun setData(user: User){
             Glide.with(itemView.userImageRight).load(user.image).placeholder(R.drawable.ic_launcher_foreground).into(itemView.userImageRight)
             itemView.tvUserName.text=user.name
-            itemView.tvLastMessage.text=user.lastmessgae
         }
     }
 
@@ -30,11 +29,11 @@ class ChatListAdapter(var userlist: ArrayList<User>, var context: Context,): Rec
       val user=userlist[position]
         holder.setData(userlist[position])
             holder.itemView.chatView.setOnClickListener {
-                val intent= Intent(context,ChatMessageActivity::class.java)
-                intent.putExtra("UserId",user.uid)
-                intent.putExtra("userName",user.name)
-                intent.putExtra("photo",user.image)
-                context.startActivity(intent)
+//                val intent= Intent(,ChatMessageActivity::class.java)
+//                intent.putExtra("UserId",user.uid)
+//                intent.putExtra("userName",user.name)
+//                intent.putExtra("photo",user.image)
+//                context.startActivity(intent)
             }
     }
 
