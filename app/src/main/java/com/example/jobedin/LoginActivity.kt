@@ -14,6 +14,10 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_login.*
+import com.google.firebase.auth.FirebaseUser
+
+
+
 
 
 class LoginActivity : AppCompatActivity() {
@@ -81,6 +85,7 @@ class LoginActivity : AppCompatActivity() {
                     var image=user.photoUrl
 
                     val hashMap:HashMap<Any,String> = HashMap<Any,String>()
+                    hashMap.put("description","")
                     hashMap.put("email", email!!)
                     hashMap.put("uid", uid!!)
                     hashMap.put("name", "")
@@ -103,5 +108,13 @@ class LoginActivity : AppCompatActivity() {
                     //updateUI(null)
                 }
             }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val currentUser: FirebaseUser? = auth.currentUser
+        if(currentUser!=null){
+            startActivity(Intent(this,MainActivity::class.java))
+        }
     }
 }

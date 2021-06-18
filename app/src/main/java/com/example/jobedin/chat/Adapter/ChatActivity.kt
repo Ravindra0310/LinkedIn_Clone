@@ -3,7 +3,6 @@ package com.example.jobedin.chat.Adapter
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobedin.Model.User
 import com.example.jobedin.R
@@ -25,7 +24,6 @@ class ChatActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
-
         FirebaseService.sharedPref = getSharedPreferences("sharedPref",Context.MODE_PRIVATE)
             FirebaseService.token = FirebaseMessaging.getInstance().token.toString()
 
@@ -34,7 +32,7 @@ class ChatActivity : AppCompatActivity(){
         chatListRecyclerView.layoutManager=LinearLayoutManager(this)
         getUserList()
 
-        userAdapter=ChatListAdapter(userList, applicationContext)
+        userAdapter=ChatListAdapter(userList)
         chatListRecyclerView.adapter=userAdapter
     }
 
