@@ -44,18 +44,21 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.jobedin.ProfileActivity
 import com.example.jobedin.R
 import com.example.jobedin.chat.Adapter.ChatActivity
 import com.example.jobedin.ui.presentation.components.Post
 import com.example.jobedin.ui.theme.RobotoFontFamily
 import com.example.jobedin.util.loadPicture
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.roundToInt
 
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-
+    var userimages= FirebaseAuth.getInstance().currentUser!!.photoUrl.toString()
     private val viewModel by viewModels<HomeScreenViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -137,7 +140,9 @@ class HomeFragment : Fragment() {
                                 HomeFragmentDirections.actionHomeFragmentToAllConversationFragment()
                             findNavController().navigate(action)
 
-                        })
+                        },profile = {
+                            startActivity(Intent(activity,ProfileActivity::class.java))
+                        },userimage = userimages)
                 }
             }
         }
@@ -169,7 +174,10 @@ fun TopBar(
     onTextChanged: (String) -> Unit,
     onSearchExecute: (String) -> Unit,
     modifier: Modifier,
-    goToChat: () -> Unit
+    goToChat: () -> Unit,
+    profile:() -> Unit,
+    userimage:String
+
 ) {
     Row(
         modifier = modifier
@@ -181,7 +189,7 @@ fun TopBar(
 
         ) {
         loadPicture(
-            url = userImage,
+            url = userimage,
             defaultImage = R.drawable.ic_comment
         ).value?.let {
             Image(
@@ -191,7 +199,9 @@ fun TopBar(
                     .clip(
                         CircleShape
                     )
-                    .size(29.dp)
+                    .size(29.dp).clickable {
+                        profile()
+                    }
             )
 
         }
@@ -230,7 +240,7 @@ fun SearchBar(
         Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
             Spacer(modifier = Modifier.size(9.dp))
             Image(
-                painter = painterResource(id = R.drawable.ic_search),
+                painter = painterResource(id = R.drawable.ic_search_mag),
                 contentDescription = "Search Icon",
                 modifier = Modifier.size(16.dp)
             )
