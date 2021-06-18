@@ -15,7 +15,17 @@ Happ/src/main/java/com/example/jobedin/ui/presentation/homeScreen/test.kt,1\d\1
 Oapp/src/main/java/com/example/jobedin/ui/presentation/components/VideoPlayer.kt,f\0\f0b06472b5665d5a56f5adec24738231a0823b93
 a
 1app/src/main/java/com/example/jobedin/LinkedIn.kt,c\f\cf4171ad6538fb9142f07d6c6743079ab24f4d88
-u
-Eapp/src/main/java/com/example/jobedin/data/remote/dto/PostsDtoItem.kt,c\f\cf8110ed1cb5e533195ec1d108e69eed4ded1ecd
-e
-5app/src/main/java/com/example/jobedin/di/AppModule.kt,a\7\a79f0945d13c9b714bb7517c2b34aed39ad0e0e2
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+g
+7app/src/main/java/com/example/jobedin/ui/theme/Color.kt,9\c\9c7919c7de3bcdf84ddefbe5eb3d2a7b22b387ec
+g
+7app/src/main/java/com/example/jobedin/ui/theme/Theme.kt,e\8\e81ecd2985330cd8a9f486ebbce99bf52b6893ee
+q
+Aapp/src/main/java/com/example/jobedin/data/remote/dto/PostsDto.kt,a\a\aa1c8b81f7509c9d9948f95605c5d3f6c0cff0f2
+f
+6app/src/main/java/com/example/jobedin/LoginActivity.kt,3\3\3332be17b0cbcd3c7145a19f30d1644b83e5506b
+r
+Bapp/src/main/java/com/example/jobedin/chat/Adapter/ChatActivity.kt,3\b\3b7635aeb6ba425aa5f3ff71f7972910fef4dad7
+q
+Aapp/src/main/java/com/example/jobedin/firebase/FirebaseService.kt,b\b\bb4494a30f4b338871db770a5689e4de1e8f291b

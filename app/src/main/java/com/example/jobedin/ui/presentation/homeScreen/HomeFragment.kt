@@ -38,7 +38,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -132,8 +131,12 @@ class HomeFragment : Fragment() {
                             }, onSearchExecute = {
                             viewModel.doSearch(it)
                             navigateToSearch()
-                        },goToChat = {
-                            startActivity(Intent(activity,ChatActivity::class.java))
+                        }, goToChat = {
+                           // startActivity(Intent(activity, ChatActivity::class.java))
+                            val action =
+                                HomeFragmentDirections.actionHomeFragmentToAllConversationFragment()
+                            findNavController().navigate(action)
+
                         })
                 }
             }
@@ -153,14 +156,13 @@ val userImage =
     "https://yt3.ggpht.com/ytc/AAUvwnix1W5yfYHFVUru51TRhdeSyFkMhglTrBp_IYP1qA=s900-c-k-c0x00ffffff-no-rj"
 
 
-
 @Composable
 fun TopBar(
     currentText: String,
     onTextChanged: (String) -> Unit,
     onSearchExecute: (String) -> Unit,
     modifier: Modifier,
-    goToChat:()-> Unit
+    goToChat: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -196,14 +198,13 @@ fun TopBar(
             painter = painterResource(id = R.drawable.ic_messagefill),
             contentDescription = "Message icon",
             modifier = Modifier.clickable {
-               goToChat()
+                goToChat()
             }
         )
 
     }
 
 }
-
 
 
 @Composable

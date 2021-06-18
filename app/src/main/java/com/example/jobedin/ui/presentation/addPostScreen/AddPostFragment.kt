@@ -1,6 +1,5 @@
 package com.example.jobedin.ui.presentation.addPostScreen
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -136,6 +135,19 @@ class AddPostFragment : Fragment() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        val activity = activity as MainActivity
+        activity.hideBottomNavi()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val activity = activity as MainActivity
+        activity.showBottomNavi()
+    }
+
 }
 
 @Composable
@@ -154,8 +166,6 @@ fun AddPostTopBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
-
             Row(
                 modifier = Modifier.fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically

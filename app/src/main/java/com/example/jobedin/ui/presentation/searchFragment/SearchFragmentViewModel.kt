@@ -2,6 +2,7 @@ package com.example.jobedin.ui.presentation.searchFragment
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.jobedin.repository.ChatRepository
 import com.example.jobedin.repository.LinkedInRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -9,7 +10,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchFragmentViewModel
 @Inject constructor(
-    val repository: LinkedInRepository
+    val repository: LinkedInRepository,
+    val chatRepository: ChatRepository
 ) : ViewModel() {
 
     val searchResults = repository.searchResults
@@ -21,6 +23,14 @@ class SearchFragmentViewModel
 
     fun searchUser() {
         repository.searchForUser(currentText.value)
+    }
+
+    fun startChat(friendUid: String, imageUid: String, userName: String) {
+        chatRepository.startConversation(
+            friendUid = friendUid,
+            imageUrl = imageUid,
+            userName = userName
+        )
     }
 
 }
