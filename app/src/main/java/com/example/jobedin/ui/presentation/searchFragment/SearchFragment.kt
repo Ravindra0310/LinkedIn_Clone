@@ -74,7 +74,11 @@ class SearchFragment : Fragment() {
                                     userName = data.name ?: "nan",
                                     description = data.description ?: "nan",
                                     modifier = Modifier.clickable {
-                                        //do stuff here
+                                        viewModel.startChat(
+                                            friendUid = data.uid ?: "nan",
+                                            imageUid = data.image ?: "nan",
+                                            userName = data.name ?: "nan"
+                                        )
                                     }
                                 )
                                 Spacer(modifier = Modifier.size(3.dp))

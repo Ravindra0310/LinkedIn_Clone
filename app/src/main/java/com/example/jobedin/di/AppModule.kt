@@ -1,5 +1,6 @@
 package com.example.jobedin.di
 
+import com.example.jobedin.repository.ChatRepository
 import com.example.jobedin.repository.LinkedInRepository
 import dagger.Module
 import dagger.Provides
@@ -15,7 +16,13 @@ class AppModule {
     @Provides
     fun providesRepository(): LinkedInRepository {
         return LinkedInRepository()
-        
+
+    }
+
+    @Singleton
+    @Provides
+    fun providesChatRepository(): ChatRepository {
+        return ChatRepository()
     }
 
 }

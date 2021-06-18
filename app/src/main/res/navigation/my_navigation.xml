@@ -14,8 +14,11 @@
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_profilesFragment"
-            app:destination="@id/profilesFragment" />
+            android:id="@+id/action_homeFragment_to_chatActivity2"
+            app:destination="@id/chatActivity2" />
+        <action
+            android:id="@+id/action_homeFragment_to_allConversationFragment"
+            app:destination="@id/allConversationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
@@ -56,9 +59,8 @@
         android:name="com.example.jobedin.fragments.JobsFragment"
         android:label="fragment_jobs"
         tools:layout="@layout/fragment_jobs" />
-    <fragment
-        android:id="@+id/profilesFragment"
-        android:name="com.example.jobedin.fragments.ProfilesFragment"
-        android:label="fragment_profiles"
-        tools:layout="@layout/fragment_profiles" />
+    <activity
+        android:id="@+id/chatActivity2"
+        android:name="com.example.jobedin.chat.Adapter.ChatActivity"
+        android:label="ChatActivity" />
 </navigation>
