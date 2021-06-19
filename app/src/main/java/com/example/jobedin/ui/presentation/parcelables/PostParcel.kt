@@ -1,6 +1,10 @@
-package com.example.jobedin.data.remote.dto
+package com.example.jobedin.ui.presentation.parcelables
 
-data class PostsDtoItem(
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class PostParcel(
     var likes: Int? = 0,
     val postText: String? = "nan",
     val postVideo: String? = null,
@@ -11,5 +15,6 @@ data class PostsDtoItem(
     val listOfAllLiked: HashMap<String, Boolean>? = hashMapOf(),
     val userName: String? = null,
     val postImage: String? = null,
-    var uniqueKey: String? = null
-)
+    var uniqueKey: String? = null,
+    var isLiked: Boolean
+) : Parcelable

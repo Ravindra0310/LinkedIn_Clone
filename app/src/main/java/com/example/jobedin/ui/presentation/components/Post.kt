@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -22,7 +23,6 @@ import com.example.jobedin.R
 import com.example.jobedin.ui.theme.PostDesColorGrey
 import com.example.jobedin.ui.theme.RobotoFontFamily
 import com.example.jobedin.util.loadPicture
-import com.google.android.exoplayer2.ExoPlayer
 
 
 @Composable
@@ -36,7 +36,10 @@ fun Post(
     postImage: String?,
     postVideo: String?,
     likes: String,
-    sharepost:() -> Unit
+    sharepost: () -> Unit,
+    onLikePressed: () -> Unit,
+    isLiked: Boolean,
+    onComment: () -> Unit
 ) {
 
     var showFull by remember {
@@ -108,11 +111,12 @@ fun Post(
                 Image(
                     bitmap = it.asImageBitmap(),
                     contentDescription = "image of the post done by $userName",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    contentScale = ContentScale.FillWidth
                 )
             }
         } else if (postVideo != null && postVideo != "nan") {
-        //    VideoPlayer(postVideo)
+            //    VideoPlayer(postVideo)
         }
         Spacer(modifier = Modifier.size(10.dp))
         Row {
@@ -157,19 +161,34 @@ fun Post(
             color = PostDesColorGrey,
             modifier = Modifier.padding(start = 10.dp, end = 10.dp)
         )
-        postButtons(sharepost=sharepost)
+        postButtons(
+            sharepost = sharepost,
+            onLikePressed = onLikePressed,
+            isLiked = isLiked,
+            onComment = onComment
+        )
 
     }
 
 }
 
 @Composable
-fun postButtons(sharepost: () -> Unit) {
+fun postButtons(
+    sharepost: () -> Unit,
+    onLikePressed: () -> Unit,
+    isLiked: Boolean,
+    onComment: () -> Unit
+) {
     Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
-        PostButtonItem(R.drawable.ic_like, name = "Like",onClick = {})
-        PostButtonItem(R.drawable.ic_comment, name = "Comment",onClick = {})
-        PostButtonItem(R.drawable.ic_share, name = "share",onClick = sharepost)
-        PostButtonItem(R.drawable.ic_send, name = "send",onClick = {})
+        PostButtonItem(
+            if (!isLiked) R.drawable.ic_like else R.drawable.ic_like_fill,
+            name = "Like",
+            onClick = {
+                onLikePressed()
+            })
+        PostButtonItem(R.drawable.ic_comment, name = "Comment", onClick = onComment)
+        PostButtonItem(R.drawable.ic_share, name = "share", onClick = sharepost)
+        PostButtonItem(R.drawable.ic_send, name = "send", onClick = {})
     }
 
 }
@@ -178,13 +197,14 @@ fun postButtons(sharepost: () -> Unit) {
 fun PostButtonItem(
     src: Int,
     name: String,
-    onClick:()->Unit
+    onClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.height(42.dp).clickable {
-            onClick()
-        }
-        ,verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .height(42.dp)
+            .clickable {
+                onClick()
+            }, verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(

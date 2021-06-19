@@ -19,7 +19,6 @@ class AppModule {
 
     }
 
-    @Singleton
     @Provides
     fun providesChatRepository(): ChatRepository {
         return ChatRepository()

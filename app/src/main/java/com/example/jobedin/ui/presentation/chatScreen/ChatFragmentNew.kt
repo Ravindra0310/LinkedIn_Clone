@@ -35,6 +35,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.jobedin.MainActivity
 import com.example.jobedin.R
+import com.example.jobedin.ui.presentation.modelsForDetachingListeners.DatabaseRefAndChildEventListener
+import com.example.jobedin.ui.presentation.parcelables.UserDetailParcel
 import com.example.jobedin.ui.theme.PostDesColorGrey
 import com.example.jobedin.ui.theme.RobotoFontFamily
 import com.example.jobedin.util.loadPicture
@@ -49,18 +51,14 @@ class ChatFragmentNew : Fragment() {
     private val args by navArgs<ChatFragmentNewArgs>()
 
     private val viewModel by viewModels<ChatViewModel>()
-
+    private lateinit var friendData: UserDetailParcel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val friendData = args.userDetailParcel
-        viewModel.startConversation(
-            friendUid = friendData.uid,
-            friendImageUrl = friendData.image,
-            friendName = friendData.name
-        )
+        friendData = args.userDetailParcel
+
 
         val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid ?: "nan"
         val currentUserName = FirebaseAuth.getInstance().currentUser?.displayName ?: "nan"
@@ -133,18 +131,25 @@ class ChatFragmentNew : Fragment() {
         }
     }
 
+
+    lateinit var databaseRef: DatabaseRefAndChildEventListener
     override fun onResume() {
         super.onResume()
         val activity = activity as MainActivity
         activity.hideBottomNavi()
+        databaseRef = viewModel.startConversation(
+            friendUid = friendData.uid,
+            friendImageUrl = friendData.image,
+            friendName = friendData.name
+        )
     }
 
     override fun onPause() {
         super.onPause()
         val activity = activity as MainActivity
         activity.showBottomNavi()
+        databaseRef.databaseRef.removeEventListener(databaseRef.childEventListener)
     }
-
 }
 
 @Composable

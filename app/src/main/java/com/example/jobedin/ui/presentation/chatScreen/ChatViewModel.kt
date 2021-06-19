@@ -3,13 +3,14 @@ package com.example.jobedin.ui.presentation.chatScreen
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.jobedin.repository.ChatRepository
+import com.example.jobedin.ui.presentation.modelsForDetachingListeners.DatabaseRefAndChildEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ChatViewModel
 @Inject constructor(
-    val chatRepository: ChatRepository
+    private val chatRepository: ChatRepository
 ) : ViewModel() {
     val currentMessage = mutableStateOf("")
 
@@ -19,8 +20,8 @@ class ChatViewModel
         friendUid: String,
         friendImageUrl: String,
         friendName: String
-    ) {
-        chatRepository.startConversation(
+    ): DatabaseRefAndChildEventListener {
+      return  chatRepository.startConversation(
             friendUid = friendUid,
             imageUrl = friendImageUrl,
             userName = friendName

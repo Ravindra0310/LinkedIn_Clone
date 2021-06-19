@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import com.example.jobedin.data.remote.dto.DisplayConversationDto
 import com.example.jobedin.data.remote.dto.conversationDto.Conversation
 import com.example.jobedin.data.remote.dto.conversationDto.MessageDto
+import com.example.jobedin.ui.presentation.modelsForDetachingListeners.DatabaseRefAndChildEventListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -24,12 +25,13 @@ class ChatRepository {
         if (currentUser?.uid != null) {
             val database = Firebase.database.getReference("listOfAllConv").child(currentUser.uid)
                 .orderByChild("timestamp")
+
             database.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     allCurrentConversations.clear()
                     for (ds in snapshot.children) {
-                        allCurrentConversations.add(
+                        allCurrentConversations.add(0,
                             DisplayConversationDto(
                                 id = ds.child("id").getValue(String::class.java),
                                 image = ds.child("image").getValue(String::class.java),
@@ -53,85 +55,93 @@ class ChatRepository {
     private val allMessages = Firebase.database.getReference("newchat")
     val allMessagesList = mutableStateListOf<MessageDto?>()
 
-    fun startConversation(friendUid: String, imageUrl: String, userName: String) {
+    fun startConversation(
+        friendUid: String,
+        imageUrl: String,
+        userName: String
+    ): DatabaseRefAndChildEventListener {
         allMessagesList.clear()
 
 
         val uid = currentUser?.uid?.let { generateUid(it, friendUid) }
-        if (uid != null) {
-            val database = allConversation.child(currentUser?.uid ?: "nan").child(uid)
-            database.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.value == null) {
-                        database.setValue(
+
+        val database = allConversation.child(currentUser?.uid ?: "nan").child(uid ?: "nan")
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.value == null) {
+                    database.setValue(
+                        DisplayConversationDto(
+                            id = uid,
+                            image = imageUrl,
+                            userName = userName,
+                            lastMessage = "nan",
+                            friendUid = friendUid
+                        )
+                    )
+
+                    allConversation.child(friendUid).child(uid ?: "nan")
+                        .setValue(
                             DisplayConversationDto(
                                 id = uid,
-                                image = imageUrl,
-                                userName = userName,
+                                image = currentUser?.photoUrl.toString(),
+                                userName = currentUser?.displayName,
                                 lastMessage = "nan",
-                                friendUid = friendUid
+                                friendUid = currentUser?.uid ?: "nan"
                             )
                         )
 
-                        allConversation.child(friendUid).child(uid)
-                            .setValue(
-                                DisplayConversationDto(
-                                    id = uid,
-                                    image = currentUser?.photoUrl.toString(),
-                                    userName = currentUser?.displayName,
-                                    lastMessage = "nan",
-                                    friendUid = currentUser?.uid ?: "nan"
-                                )
-                            )
-
-                        allMessages.child(uid).setValue(
-                            Conversation(
-                                conversationId = uid,
-                                lastMessage = "nan"
-                            )
-                        )
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    //todo
-                }
-            })
-
-            val allMessageDataBase = allMessages.child(uid).child("messages")
-
-            allMessageDataBase.addChildEventListener(object : ChildEventListener {
-                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    allMessagesList.add(
-                        0,
-                        MessageDto(
-                            messages = snapshot.child("messages").getValue(String::class.java),
-                            senderUid = snapshot.child("senderUid").getValue(String::class.java)
+                    allMessages.child(uid ?: "nan").setValue(
+                        Conversation(
+                            conversationId = uid,
+                            lastMessage = "nan"
                         )
                     )
                 }
+                database.removeEventListener(this)
+            }
 
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+            override fun onCancelled(error: DatabaseError) {
+                //todo
+            }
+        })
 
-                }
+        val allMessageDataBase = allMessages.child(uid ?: "nan").child("messages")
 
-                override fun onChildRemoved(snapshot: DataSnapshot) {
+        val allMessagesListener = object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                allMessagesList.add(
+                    0,
+                    MessageDto(
+                        messages = snapshot.child("messages").getValue(String::class.java),
+                        senderUid = snapshot.child("senderUid").getValue(String::class.java)
+                    )
+                )
+            }
 
-                }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
 
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            }
 
-                }
+            override fun onChildRemoved(snapshot: DataSnapshot) {
 
-                override fun onCancelled(error: DatabaseError) {
+            }
 
-                }
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
 
-            })
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
 
         }
 
+        allMessageDataBase.addChildEventListener(allMessagesListener)
 
+        return DatabaseRefAndChildEventListener(
+            databaseRef = allMessageDataBase,
+            childEventListener = allMessagesListener
+        )
     }
 
 

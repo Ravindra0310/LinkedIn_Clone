@@ -31,7 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.jobedin.R
+import com.example.jobedin.ui.presentation.parcelables.UserDetailParcel
 import com.example.jobedin.ui.theme.PostDesColorGrey
 import com.example.jobedin.ui.theme.RobotoFontFamily
 import com.example.jobedin.util.loadPicture
@@ -74,11 +76,17 @@ class SearchFragment : Fragment() {
                                     userName = data.name ?: "nan",
                                     description = data.description ?: "nan",
                                     modifier = Modifier.clickable {
-                                        viewModel.startChat(
-                                            friendUid = data.uid ?: "nan",
-                                            imageUid = data.image ?: "nan",
-                                            userName = data.name ?: "nan"
-                                        )
+
+
+                                        val action =
+                                            SearchFragmentDirections.actionSearchFragmentToChatFragmentNew(
+                                                UserDetailParcel(
+                                                    name = data?.name ?: "nan",
+                                                    image = data.image ?: "nan",
+                                                    uid = data.uid ?: "nan"
+                                                )
+                                            )
+                                        findNavController().navigate(action)
                                     }
                                 )
                                 Spacer(modifier = Modifier.size(3.dp))

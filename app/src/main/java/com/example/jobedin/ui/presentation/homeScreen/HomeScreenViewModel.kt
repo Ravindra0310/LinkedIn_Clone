@@ -1,6 +1,5 @@
 package com.example.jobedin.ui.presentation.homeScreen
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.jobedin.data.remote.dto.PostsDtoItem
@@ -25,10 +24,6 @@ class HomeScreenViewModel @Inject constructor(
             likes = 455,
             postVideo = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
         )
-
-        posts.value?.add(daata)
-        Log.d("sdfs", "${posts.value?.size}")
-        number.value = posts.value?.size ?: 0
     }
 
     val currentQueryText = mutableStateOf("")
@@ -37,5 +32,13 @@ class HomeScreenViewModel @Inject constructor(
         repository.searchForUser(query)
     }
 
+    fun updateLikeList(
+        postId: String,
+        addLike: Boolean,
+        numberOfLikes:Int
+    ) {
+
+        repository.updateLikedList(postId = postId, addLike = addLike,numberOfLikes=numberOfLikes)
+    }
 
 }
