@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.jobedin.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -30,8 +31,8 @@ public class PersonalityViewHolder extends RecyclerView.ViewHolder {
         mTvExperience=itemView.findViewById(R.id.tvConnections);
     }
     public void setData(Personality personality){
-        mImg.setImageResource(personality.getImageId());
-        mCircularImgView.setImageResource(personality.getCircularImgId());
+        Glide.with(mCircularImgView).load(personality.getImageId()).into(mCircularImgView);
+        mImg.setImageResource(personality.getCircularImgId());
         mTvName.setText(personality.getName());
         mTvProfession.setText(personality.getProfession());
         mTvExperience.setText(personality.getExperience());
