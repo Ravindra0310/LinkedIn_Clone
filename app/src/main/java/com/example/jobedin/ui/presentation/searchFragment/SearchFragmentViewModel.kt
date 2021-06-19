@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.jobedin.repository.ChatRepository
 import com.example.jobedin.repository.LinkedInRepository
+import com.example.jobedin.ui.presentation.modelsForDetachingListeners.DatabaseRefAndChildEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -25,8 +26,8 @@ class SearchFragmentViewModel
         repository.searchForUser(currentText.value)
     }
 
-    fun startChat(friendUid: String, imageUid: String, userName: String) {
-        chatRepository.startConversation(
+    fun startChat(friendUid: String, imageUid: String, userName: String): DatabaseRefAndChildEventListener {
+       return chatRepository.startConversation(
             friendUid = friendUid,
             imageUrl = imageUid,
             userName = userName

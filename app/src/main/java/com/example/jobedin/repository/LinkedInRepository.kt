@@ -5,8 +5,10 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import com.example.jobedin.MainActivity
+import com.example.jobedin.data.remote.dto.CommentsDto
 import com.example.jobedin.data.remote.dto.PostsDtoItem
 import com.example.jobedin.data.remote.dto.UserDto
+import com.example.jobedin.ui.presentation.modelsForDetachingListeners.DatabaseRefAndChildEventListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -32,39 +34,39 @@ class LinkedInRepository {
         setListener()
     }
 
-     fun setListener() {
-         postDatabaseReference.addChildEventListener(object : ChildEventListener {
-             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                 val data = snapshot.getValue(PostsDtoItem::class.java)
-                 data?.uniqueKey = snapshot.key
-                 if (postsLiveData.isNullOrEmpty()) {
-                     postsLiveData.add(data)
-                 } else {
-                     postsLiveData.add(0, data)
-                 }
-                 size.value = postsLiveData.size ?: 0
-             }
+    fun setListener() {
+        postDatabaseReference.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val data = snapshot.getValue(PostsDtoItem::class.java)
+                data?.uniqueKey = snapshot.key
+                if (postsLiveData.isNullOrEmpty()) {
+                    postsLiveData.add(data)
+                } else {
+                    postsLiveData.add(0, data)
+                }
+                size.value = postsLiveData.size ?: 0
+            }
 
-             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
 
 
-             }
+            }
 
-             override fun onChildRemoved(snapshot: DataSnapshot) {
+            override fun onChildRemoved(snapshot: DataSnapshot) {
 
-             }
+            }
 
-             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
 
-             }
+            }
 
-             override fun onCancelled(error: DatabaseError) {
+            override fun onCancelled(error: DatabaseError) {
 
-             }
+            }
 
-         })
+        })
 
-     }
+    }
 
 
     fun setListenerr() {
@@ -215,5 +217,59 @@ class LinkedInRepository {
         postDatabaseReference.child(postId).updateChildren(likecount)
 
     }
+
+    private val currentUserName = FirebaseAuth.getInstance().currentUser?.displayName ?: "nan"
+    val currentUserImage = FirebaseAuth.getInstance().currentUser?.photoUrl.toString() ?: "nan"
+
+    fun addComment(postId: String, comment: String) {
+        val data = CommentsDto(
+            name = currentUserName,
+            des = "Android Developer",
+            image = currentUserImage,
+            comment = comment
+        )
+        postDatabaseReference.child(postId).child("comment").push().setValue(data)
+
+    }
+
+    val comments = mutableStateListOf<CommentsDto?>()
+
+    fun getComment(postId: String): DatabaseRefAndChildEventListener {
+
+        comments.clear()
+
+        val commentsRef = postDatabaseReference.child(postId).child("comment")
+        val listener = object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val data = snapshot.getValue(CommentsDto::class.java)
+                comments.add(data)
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        }
+
+        commentsRef.addChildEventListener(listener)
+
+
+        return DatabaseRefAndChildEventListener(
+            databaseRef = commentsRef,
+            childEventListener = listener
+        )
+    }
+
 
 }

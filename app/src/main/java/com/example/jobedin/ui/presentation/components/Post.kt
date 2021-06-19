@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -37,7 +38,8 @@ fun Post(
     likes: String,
     sharepost: () -> Unit,
     onLikePressed: () -> Unit,
-    isLiked: Boolean
+    isLiked: Boolean,
+    onComment: () -> Unit
 ) {
 
     var showFull by remember {
@@ -109,7 +111,8 @@ fun Post(
                 Image(
                     bitmap = it.asImageBitmap(),
                     contentDescription = "image of the post done by $userName",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    contentScale = ContentScale.FillWidth
                 )
             }
         } else if (postVideo != null && postVideo != "nan") {
@@ -158,7 +161,12 @@ fun Post(
             color = PostDesColorGrey,
             modifier = Modifier.padding(start = 10.dp, end = 10.dp)
         )
-        postButtons(sharepost = sharepost, onLikePressed = onLikePressed, isLiked = isLiked)
+        postButtons(
+            sharepost = sharepost,
+            onLikePressed = onLikePressed,
+            isLiked = isLiked,
+            onComment = onComment
+        )
 
     }
 
@@ -168,7 +176,8 @@ fun Post(
 fun postButtons(
     sharepost: () -> Unit,
     onLikePressed: () -> Unit,
-    isLiked: Boolean
+    isLiked: Boolean,
+    onComment: () -> Unit
 ) {
     Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
         PostButtonItem(
@@ -177,7 +186,7 @@ fun postButtons(
             onClick = {
                 onLikePressed()
             })
-        PostButtonItem(R.drawable.ic_comment, name = "Comment", onClick = {})
+        PostButtonItem(R.drawable.ic_comment, name = "Comment", onClick = onComment)
         PostButtonItem(R.drawable.ic_share, name = "share", onClick = sharepost)
         PostButtonItem(R.drawable.ic_send, name = "send", onClick = {})
     }

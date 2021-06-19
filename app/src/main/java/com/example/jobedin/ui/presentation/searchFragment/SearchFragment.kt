@@ -76,11 +76,7 @@ class SearchFragment : Fragment() {
                                     userName = data.name ?: "nan",
                                     description = data.description ?: "nan",
                                     modifier = Modifier.clickable {
-                                        viewModel.startChat(
-                                            friendUid = data.uid ?: "nan",
-                                            imageUid = data.image ?: "nan",
-                                            userName = data.name ?: "nan"
-                                        )
+
 
                                         val action =
                                             SearchFragmentDirections.actionSearchFragmentToChatFragmentNew(

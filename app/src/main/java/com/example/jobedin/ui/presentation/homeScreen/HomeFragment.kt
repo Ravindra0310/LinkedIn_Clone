@@ -43,6 +43,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.jobedin.ProfileActivity
 import com.example.jobedin.R
 import com.example.jobedin.ui.presentation.components.Post
+import com.example.jobedin.ui.presentation.parcelables.PostParcel
 import com.example.jobedin.ui.theme.RobotoFontFamily
 import com.example.jobedin.util.loadPicture
 import com.google.firebase.auth.FirebaseAuth
@@ -145,7 +146,29 @@ class HomeFragment : Fragment() {
                                     }
 
                                 },
-                                isLiked = isLiked
+                                isLiked = isLiked,
+                                onComment = {
+                                    val action =
+                                        HomeFragmentDirections.actionHomeFragmentToCommentFragment(
+                                            PostParcel(
+                                                profilePic = viewModel.posts!![post]?.profilePic
+                                                    ?: "nan",
+                                                userName = viewModel.posts!![post]?.userName
+                                                    ?: "nan",
+                                                subDis1 = viewModel.posts!![post]?.subDis1 ?: "nan",
+                                                time = viewModel.posts!![post]?.time ?: "nan",
+                                                postText = viewModel.posts!![post]?.postText,
+                                                tags = viewModel.posts!![post]?.tags,
+                                                postImage = viewModel.posts!![post]?.postImage
+                                                    ?: "nan",
+                                                postVideo = viewModel.posts!![post]?.postVideo,
+                                                likes = viewModel.posts[post]?.likes,
+                                                isLiked = isLiked,
+                                                uniqueKey = viewModel.posts[post]?.uniqueKey
+                                            )
+                                        )
+                                    findNavController().navigate(action)
+                                }
                             )
                             Spacer(modifier = Modifier.size(3.dp))
                         }
