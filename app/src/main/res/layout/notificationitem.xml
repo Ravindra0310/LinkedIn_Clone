@@ -8,24 +8,38 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
+
+<!--        <ImageView-->
+<!--            android:id="@+id/ivNotificationImageLogo"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginStart="17.5dp"-->
+<!--            android:layout_marginTop="17.5dp"-->
+<!--            android:layout_marginEnd="11dp"-->
+<!--            android:scaleType="fitXY"-->
+<!--            android:src="@drawable/bgimage" />-->
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivNotificationImageLogo"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:scaleType="fitXY"
-            android:layout_marginTop="17.5dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="17.5dp"
+            android:layout_marginTop="17.5dp"
             android:layout_marginEnd="11dp"
-            android:src="@drawable/bgimage"/>
+            android:src="@mipmap/ic_launcher"
+             />
+
+
         <TextView
             android:id="@+id/tvNotificationContent"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17.5dp"
-            android:text="DvText a company you just followed just shared a post you may be intrested in do check www.devTex.in "
-            android:textSize="13.5sp"
             android:layout_marginEnd="30dp"
-            android:layout_toRightOf="@id/ivNotificationImageLogo"/>
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:layout_toRightOf="@id/ivNotificationImageLogo"
+            android:text="DvText a company you just followed just shared a post you may be intrested in do check www.devTex.in "
+            android:textSize="13.5sp" />
         <TextView
             android:id="@+id/tvNotificationTime"
             android:layout_width="wrap_content"

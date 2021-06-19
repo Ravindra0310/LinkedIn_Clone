@@ -9,13 +9,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/ivBackGroundImage"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:src="@drawable/sachin"
             android:scaleType="fitXY"
-            />
+            android:src="@drawable/sachin" />
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivCircularImage"
             android:layout_width="80dp"

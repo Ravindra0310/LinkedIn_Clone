@@ -2,14 +2,14 @@ package com.example.jobedin.RecyclerViewComponant;
 
 public class Personality {
 
-    private int imageId;
+    private String imageId;
     private int circularImgId;
     private String name;
 
     private String profession;
     private String experience;
 
-    public Personality(int imageId,int circularImgId ,String name, String profession, String experience) {
+    public Personality(String imageId,int circularImgId ,String name, String profession, String experience) {
         this.imageId = imageId;
         this.name = name;
         this.circularImgId=circularImgId;
@@ -24,7 +24,7 @@ public class Personality {
         return circularImgId;
     }
 
-    public int getImageId() {
+    public String getImageId() {
         return imageId;
     }
 
