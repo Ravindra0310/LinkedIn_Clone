@@ -2,14 +2,16 @@ package com.example.jobedin.repository
 
 import android.net.Uri
 import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
 import com.example.jobedin.MainActivity
 import com.example.jobedin.data.remote.dto.PostsDtoItem
 import com.example.jobedin.data.remote.dto.UserDto
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -19,7 +21,7 @@ class LinkedInRepository {
 
     private val database = Firebase.database
     private val postDatabaseReference = database.getReference("posts")
-    val postsLiveData = MutableLiveData<ArrayList<PostsDtoItem?>>(arrayListOf())
+    val postsLiveData = mutableStateListOf<PostsDtoItem?>()
     val size = mutableStateOf(0)
     var uploadTask: UploadTask? = null
     var firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
@@ -30,37 +32,63 @@ class LinkedInRepository {
         setListener()
     }
 
-    fun setListener() {
-        postDatabaseReference.addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val data = snapshot.getValue(PostsDtoItem::class.java)
-                data?.uniqueKey = snapshot.key
+     fun setListener() {
+         postDatabaseReference.addChildEventListener(object : ChildEventListener {
+             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                 val data = snapshot.getValue(PostsDtoItem::class.java)
+                 data?.uniqueKey = snapshot.key
+                 if (postsLiveData.isNullOrEmpty()) {
+                     postsLiveData.add(data)
+                 } else {
+                     postsLiveData.add(0, data)
+                 }
+                 size.value = postsLiveData.size ?: 0
+             }
 
-                if (postsLiveData.value.isNullOrEmpty()) {
-                    postsLiveData.value?.add(data)
-                } else {
-                    postsLiveData.value?.add(0, data)
+             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+
+             }
+
+             override fun onChildRemoved(snapshot: DataSnapshot) {
+
+             }
+
+             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+
+             }
+
+             override fun onCancelled(error: DatabaseError) {
+
+             }
+
+         })
+
+     }
+
+
+    fun setListenerr() {
+        postDatabaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                postsLiveData.clear()
+                for (ds in snapshot.children) {
+                    val data = ds.getValue(PostsDtoItem::class.java)
+                    data?.uniqueKey = ds.key
+
+                    if (postsLiveData.isNullOrEmpty()) {
+                        postsLiveData.add(data)
+                    } else {
+                        postsLiveData.add(0, data)
+                    }
+
+                    size.value = postsLiveData.size ?: 0
+                    Log.d("dasda", "${postsLiveData.get(0)?.userName}")
+                    Log.d("dasda", "${postsLiveData?.size}")
+
                 }
-
-                size.value = postsLiveData.value?.size ?: 0
-                Log.d("dasda", "${postsLiveData.value?.get(0)?.userName}")
-                Log.d("dasda", "${postsLiveData.value?.size}")
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-
             }
 
             override fun onCancelled(error: DatabaseError) {
-
             }
 
         })
@@ -167,4 +195,25 @@ class LinkedInRepository {
 
             })
     }
+
+    private val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid ?: "nan"
+    fun updateLikedList(
+        postId: String,
+        addLike: Boolean,
+        numberOfLikes: Int
+    ) {
+        val likesRef = postDatabaseReference.child(postId).child("listOfAllLiked")
+        val hopperUpdates: MutableMap<String, Any> = HashMap()
+        if (addLike) {
+            hopperUpdates[currentUserUid] = true
+            likesRef.updateChildren(hopperUpdates)
+        } else {
+            likesRef.child(currentUserUid).removeValue()
+        }
+        val likecount: MutableMap<String, Any> = HashMap()
+        likecount["likes"] = numberOfLikes
+        postDatabaseReference.child(postId).updateChildren(likecount)
+
+    }
+
 }

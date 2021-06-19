@@ -73,7 +73,6 @@ class AllConversationFragment : Fragment() {
                                         findNavController().navigate(action)
                                     }
                                 )
-
                             }
                         }
                     }

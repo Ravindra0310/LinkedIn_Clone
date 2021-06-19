@@ -24,6 +24,7 @@ class ChatRepository {
         if (currentUser?.uid != null) {
             val database = Firebase.database.getReference("listOfAllConv").child(currentUser.uid)
                 .orderByChild("timestamp")
+
             database.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 

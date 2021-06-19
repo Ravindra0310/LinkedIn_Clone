@@ -18,11 +18,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,25 +42,23 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.jobedin.ProfileActivity
 import com.example.jobedin.R
-import com.example.jobedin.chat.Adapter.ChatActivity
 import com.example.jobedin.ui.presentation.components.Post
 import com.example.jobedin.ui.theme.RobotoFontFamily
 import com.example.jobedin.util.loadPicture
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.roundToInt
 
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-    var userimages= FirebaseAuth.getInstance().currentUser!!.photoUrl.toString()
+    var userimages = FirebaseAuth.getInstance().currentUser!!.photoUrl.toString()
     private val viewModel by viewModels<HomeScreenViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid ?: "nan"
         return ComposeView(requireContext()).apply {
             setContent {
 
@@ -93,7 +87,7 @@ class HomeFragment : Fragment() {
                         .nestedScroll(nestedScrollConnection)
 
                 ) {
-                    val posts by viewModel.posts.observeAsState()
+
 
                     val size by remember {
                         viewModel.number
@@ -103,21 +97,55 @@ class HomeFragment : Fragment() {
                         item {
                             StoriesRow()
                         }
-                        items(size) { post ->
+                        items(viewModel.posts.size) { post ->
                             Spacer(modifier = Modifier.size(3.dp))
+                            val likeData = viewModel.posts[post]?.listOfAllLiked
+                            var isLiked by remember {
+                                mutableStateOf(likeData?.containsKey(currentUserUid) == true)
+                            }
                             Post(
-                                profilePic = posts!![post]?.profilePic ?: "nan",
-                                userName = posts!![post]?.userName ?: "nan",
-                                des = posts!![post]?.subDis1 ?: "nan",
-                                time = posts!![post]?.time ?: "nan",
-                                postText = posts!![post]?.postText,
-                                tags = posts!![post]?.tags,
-                                postImage = posts!![post]?.postImage ?: "nan",
-                                postVideo = posts!![post]?.postVideo,
-                                likes = "${posts!![post]?.likes}",
+                                profilePic = viewModel.posts!![post]?.profilePic ?: "nan",
+                                userName = viewModel.posts!![post]?.userName ?: "nan",
+                                des = viewModel.posts!![post]?.subDis1 ?: "nan",
+                                time = viewModel.posts!![post]?.time ?: "nan",
+                                postText = viewModel.posts!![post]?.postText,
+                                tags = viewModel.posts!![post]?.tags,
+                                postImage = viewModel.posts!![post]?.postImage ?: "nan",
+                                postVideo = viewModel.posts!![post]?.postVideo,
+                                likes = "${viewModel.posts[post]?.likes}",
                                 sharepost = {
-                                   sharePost(posts!![post]?.postText!!)
-                                }
+                                    sharePost(viewModel.posts[post]?.postText!!)
+                                },
+                                onLikePressed = {
+                                    isLiked = if (likeData?.containsKey(currentUserUid) == true) {
+                                        likeData.remove(currentUserUid)
+                                        viewModel.posts[post]?.likes =
+                                            viewModel.posts[post]?.likes?.minus(
+                                                1
+                                            )
+                                        viewModel.updateLikeList(
+                                            postId = viewModel.posts[post]!!.uniqueKey!!,
+                                            addLike = false,
+                                            numberOfLikes = viewModel.posts[post]?.likes ?: 1
+                                        )
+                                        false
+
+                                    } else {
+                                        likeData?.put(currentUserUid, true)
+                                        viewModel.posts[post]?.likes =
+                                            viewModel.posts[post]?.likes?.plus(
+                                                1
+                                            )
+                                        viewModel.updateLikeList(
+                                            postId = viewModel.posts[post]!!.uniqueKey!!,
+                                            addLike = true,
+                                            numberOfLikes = viewModel.posts[post]?.likes ?: 0
+                                        )
+                                        true
+                                    }
+
+                                },
+                                isLiked = isLiked
                             )
                             Spacer(modifier = Modifier.size(3.dp))
                         }
@@ -135,14 +163,15 @@ class HomeFragment : Fragment() {
                             viewModel.doSearch(it)
                             navigateToSearch()
                         }, goToChat = {
-                           // startActivity(Intent(activity, ChatActivity::class.java))
+                            // startActivity(Intent(activity, ChatActivity::class.java))
                             val action =
                                 HomeFragmentDirections.actionHomeFragmentToAllConversationFragment()
                             findNavController().navigate(action)
 
-                        },profile = {
-                            startActivity(Intent(activity,ProfileActivity::class.java))
-                        },userimage = userimages)
+                        }, profile = {
+                            startActivity(Intent(activity, ProfileActivity::class.java))
+                        }, userimage = userimages
+                    )
                 }
             }
         }
@@ -175,8 +204,8 @@ fun TopBar(
     onSearchExecute: (String) -> Unit,
     modifier: Modifier,
     goToChat: () -> Unit,
-    profile:() -> Unit,
-    userimage:String
+    profile: () -> Unit,
+    userimage: String
 
 ) {
     Row(
@@ -199,7 +228,8 @@ fun TopBar(
                     .clip(
                         CircleShape
                     )
-                    .size(29.dp).clickable {
+                    .size(29.dp)
+                    .clickable {
                         profile()
                     }
             )
