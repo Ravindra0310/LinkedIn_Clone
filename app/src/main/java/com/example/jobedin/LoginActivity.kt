@@ -88,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
                     hashMap.put("description","")
                     hashMap.put("email", email!!)
                     hashMap.put("uid", uid!!)
-                    hashMap.put("name", "")
+                    hashMap.put("name", user.displayName?:"New User")
                     hashMap.put("phone", "")
                     hashMap.put("image", image!!.toString())
 
@@ -99,7 +99,7 @@ class LoginActivity : AppCompatActivity() {
 
 
                     Toast.makeText(this, ""+ user!!.email, Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this,MainActivity::class.java))
+                    startActivity(Intent(this,MainActivity::class.java) .setFlags (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.
@@ -114,7 +114,8 @@ class LoginActivity : AppCompatActivity() {
         super.onStart()
         val currentUser: FirebaseUser? = auth.currentUser
         if(currentUser!=null){
-            startActivity(Intent(this,MainActivity::class.java))
+
+            startActivity(Intent(this,MainActivity::class.java) .setFlags (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
         }
     }
 }

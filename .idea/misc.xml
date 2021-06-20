@@ -12,12 +12,14 @@
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/activity_sign_in.xml" value="0.18" />
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/chatlist_item.xml" value="0.12" />
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/fragment_chat_new.xml" value="0.14515027322404372" />
+        <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/fragment_jobs.xml" value="0.153125" />
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/fragment_network.xml" value="0.1325136612021858" />
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/fragment_notification.xml" value="0.11748633879781421" />
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/fragment_profile.xml" value="0.14" />
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/fragment_profiles.xml" value="0.15" />
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/iteam_left.xml" value="0.17" />
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/iteam_rigth.xml" value="0.11065573770491803" />
+        <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/jobsitemlayout.xml" value="0.25" />
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/mynetwork.xml" value="0.14515027322404372" />
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/layout/notificationitem.xml" value="0.25" />
         <entry key="..\:/Ravi/linkdin/LinkedIn_Clone/app/src/main/res/menu/menu_nav.xml" value="0.1" />
@@ -45,7 +47,6 @@
         <entry key="..\:/Users/karth/AndroidStudioProjects/LinkedIn_Clone/app/src/main/res/layout/fragment_add_post.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/karth/AndroidStudioProjects/LinkedIn_Clone/app/src/main/res/layout/fragment_all_conversation.xml" value="0.20742753623188406" />
         <entry key="..\:/Users/karth/AndroidStudioProjects/LinkedIn_Clone/app/src/main/res/layout/fragment_blank.xml" value="0.16394927536231885" />
-        <entry key="..\:/Users/karth/AndroidStudioProjects/LinkedIn_Clone/app/src/main/res/layout/fragment_comment.xml" value="0.19384057971014493" />
         <entry key="..\:/Users/karth/AndroidStudioProjects/LinkedIn_Clone/app/src/main/res/layout/fragment_test.xml" value="0.18072916666666666" />
         <entry key="..\:/Users/karth/AndroidStudioProjects/LinkedIn_Clone/app/src/main/res/menu/menu_nav.xml" value="0.33" />
       </map>

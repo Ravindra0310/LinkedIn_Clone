@@ -4,20 +4,25 @@ import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.jobedin.MainActivity
+import com.example.jobedin.RecyclerViewComponant.JobRecycelerView.JobModel
+import com.example.jobedin.RecyclerViewComponant.NotificationRecyclerView.NotificationModel
 import com.example.jobedin.data.remote.dto.CommentsDto
 import com.example.jobedin.data.remote.dto.PostsDtoItem
 import com.example.jobedin.data.remote.dto.UserDto
 import com.example.jobedin.ui.presentation.modelsForDetachingListeners.DatabaseRefAndChildEventListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
+import com.example.jobedin.Model.User
+
+
+
 
 class LinkedInRepository {
 
@@ -28,7 +33,8 @@ class LinkedInRepository {
     var uploadTask: UploadTask? = null
     var firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
     var storageReference = firebaseStorage.getReference("post_images")
-
+    private var joblist= ArrayList<JobModel>()
+    private val mutableLiveData = MutableLiveData<ArrayList<JobModel>>()
 
     init {
         setListener()
@@ -129,7 +135,8 @@ class LinkedInRepository {
                         subDis1 = postItem.subDis1,
                         time = postItem.time,
                         userName = postItem.userName,
-                        postImage = downloadUrl
+                        postImage = downloadUrl,
+                        profilePic = postItem.profilePic
                     )
                     addPost(item)
                 } else if (type == "mp4" || type == "mkv" || type == "webm" || type == "3gp") {
@@ -138,7 +145,8 @@ class LinkedInRepository {
                         subDis1 = postItem.subDis1,
                         time = postItem.time,
                         userName = postItem.userName,
-                        postVideo = downloadUrl
+                        postVideo = downloadUrl ,
+                        profilePic = postItem.profilePic
                     )
                     addPost(item)
                 } else {
@@ -271,5 +279,25 @@ class LinkedInRepository {
         )
     }
 
+    fun getJobData(): LiveData<ArrayList<JobModel>> {
+        var databaseRefercence= FirebaseDatabase.getInstance().getReference("notification")
+        databaseRefercence.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                joblist.clear()
+                for(dataSnapShot: DataSnapshot in snapshot.children){
+                    val notification=dataSnapShot.getValue(JobModel::class.java)
+                    joblist.add(JobModel())
+                }
+                mutableLiveData.value=joblist
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
+        return mutableLiveData
+    }
 
 }

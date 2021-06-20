@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.jobedin.R;
 
 import org.w3c.dom.Text;
@@ -30,7 +31,7 @@ public class JobViewHolder extends RecyclerView.ViewHolder {
 
     }
     public void setData(JobModel jobModel){
-        mIvCompanyImage.setImageResource(jobModel.getImageId());
+        Glide.with(mIvCompanyImage).load(jobModel.getImageId()).into(mIvCompanyImage);
         mTvJobType.setText(jobModel.getJobType());
         mTvCompanyName.setText(jobModel.getCompanyName());
         mTvJobLocation.setText(jobModel.getJobLocation());

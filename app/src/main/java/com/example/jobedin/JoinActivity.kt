@@ -57,7 +57,7 @@ class JoinActivity : AppCompatActivity() {
 
                     reference.child(uid).setValue(hashMap)
 
-                    startActivity(Intent(this,MainActivity::class.java))
+                    startActivity(Intent(this,MainActivity::class.java) .setFlags (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.
