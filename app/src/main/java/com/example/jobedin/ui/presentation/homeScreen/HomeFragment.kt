@@ -96,7 +96,7 @@ class HomeFragment : Fragment() {
 
                     LazyColumn(contentPadding = PaddingValues(top = toolbarHeight)) {
                         item {
-                            StoriesRow()
+                            StoriesRow(userImage = userimages)
                         }
                         items(viewModel.posts.size) { post ->
                             Spacer(modifier = Modifier.size(3.dp))
@@ -216,8 +216,7 @@ class HomeFragment : Fragment() {
 }
 
 
-val userImage =
-    "https://yt3.ggpht.com/ytc/AAUvwnix1W5yfYHFVUru51TRhdeSyFkMhglTrBp_IYP1qA=s900-c-k-c0x00ffffff-no-rj"
+
 
 
 @Composable
@@ -242,7 +241,7 @@ fun TopBar(
         ) {
         loadPicture(
             url = userimage,
-            defaultImage = R.drawable.ic_comment
+            defaultImage = R.drawable.place_holder
         ).value?.let {
             Image(
                 bitmap = it.asImageBitmap(),
@@ -342,7 +341,7 @@ fun SearchBar(
 
 
 @Composable
-fun StoriesRow() {
+fun StoriesRow(userImage:String) {
 
     Box(
         modifier = Modifier
@@ -363,7 +362,7 @@ fun StoriesRow() {
                     Box(modifier = Modifier.size(57.dp)) {
                         loadPicture(
                             url = userImage,
-                            defaultImage = R.drawable.ic_comment
+                            defaultImage = R.drawable.place_holder
                         ).value?.let {
                             Image(
                                 bitmap = it.asImageBitmap(),
@@ -415,7 +414,7 @@ fun StoriesRow() {
                     Box(modifier = Modifier.size(57.dp)) {
                         loadPicture(
                             url = userImage,
-                            defaultImage = R.drawable.ic_comment
+                            defaultImage = R.drawable.place_holder
                         ).value?.let {
                             Image(
                                 bitmap = it.asImageBitmap(),

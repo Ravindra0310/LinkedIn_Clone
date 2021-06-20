@@ -169,7 +169,7 @@ fun SearchResult(
             Row {
                 loadPicture(
                     url = imageUrl,
-                    defaultImage = R.drawable.ic_comment
+                    defaultImage = R.drawable.place_holder
                 ).value?.let {
                     Image(
                         bitmap = it.asImageBitmap(),

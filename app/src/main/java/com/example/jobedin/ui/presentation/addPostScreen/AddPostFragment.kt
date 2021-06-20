@@ -33,12 +33,12 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.jobedin.MainActivity
 import com.example.jobedin.R
-import com.example.jobedin.ui.presentation.homeScreen.userImage
 import com.example.jobedin.ui.theme.PostDesColorGrey
 import com.example.jobedin.ui.theme.RobotoFontFamily
 import com.example.jobedin.util.loadPicture
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -60,6 +60,8 @@ class AddPostFragment : Fragment() {
 
         navController = findNavController()
 
+        val userImage = FirebaseAuth.getInstance().currentUser?.photoUrl.toString()
+        val userName = FirebaseAuth.getInstance().currentUser?.displayName ?: "nan"
 
         return ComposeView(requireContext()).apply {
             setContent {
@@ -83,7 +85,10 @@ class AddPostFragment : Fragment() {
                                 isPostEnabled = viewModel.currentText.value.isNotEmpty(),
                                 onClick = {
                                     if (viewModel.currentText.value.isNotEmpty()) {
-                                        viewModel.addPost()
+                                        viewModel.addPost(name=userName, image =userImage )
+                                        val action =
+                                            AddPostFragmentDirections.actionAddPostFragmentToHomeFragment()
+                                        findNavController().navigate(action)
                                     }
                                 }
                             )
@@ -114,7 +119,9 @@ class AddPostFragment : Fragment() {
                                             viewModel.showBottomBar.value = false
                                         }
                                     }
-                                }
+                                },
+                                userName = userName,
+                                userImage = userImage
                             )
 
 
@@ -255,8 +262,6 @@ fun AddPostBottomBar() {
 }
 
 
-var userName = "username"
-
 @Composable
 fun BottomSheet(
 ) {
@@ -342,11 +347,13 @@ fun navigateToCameraFragment() {
 fun AddPostTextArea(
     currentText: String,
     onTextChanged: (String) -> Unit,
-    onFocusChanged: (Boolean) -> Unit
+    onFocusChanged: (Boolean) -> Unit,
+    userName: String,
+    userImage: String
 ) {
 
     Column(modifier = Modifier.padding(start = 17.dp, top = 20.dp)) {
-        AddPostHeader(name = userName)
+        AddPostHeader(name = userName, userImage = userImage)
         Spacer(modifier = Modifier.size(20.dp))
         Box() {
             BasicTextField(
@@ -377,7 +384,7 @@ fun AddPostTextArea(
         Spacer(modifier = Modifier.size(20.dp))
         loadPicture(
             MainActivity.tempPicPath,
-            R.drawable.ic_share
+            R.drawable.place_holder
         ).value?.let {
             Image(
                 bitmap = it.asImageBitmap(),
@@ -396,10 +403,11 @@ fun AddPostTextArea(
 
 @Composable
 fun AddPostHeader(
-    name: String
+    name: String,
+    userImage: String
 ) {
     Row {
-        loadPicture(url = userImage, defaultImage = R.drawable.ic_comment).value?.let {
+        loadPicture(url = userImage, defaultImage = R.drawable.place_holder).value?.let {
             Image(
                 bitmap = it.asImageBitmap(),
                 contentDescription = "Profile pic of $name",

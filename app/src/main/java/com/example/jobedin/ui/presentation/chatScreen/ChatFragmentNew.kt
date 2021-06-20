@@ -245,7 +245,7 @@ fun ChatBox(
             .padding(top = 13.dp, bottom = 13.dp, start = 11.dp, end = 11.dp)
             .fillMaxWidth()
     ) {
-        loadPicture(url = imageUrl, defaultImage = R.drawable.ic_comment).value?.let {
+        loadPicture(url = imageUrl, defaultImage = R.drawable.place_holder).value?.let {
             Image(
                 bitmap = it.asImageBitmap(),
                 contentDescription = "image of $name",

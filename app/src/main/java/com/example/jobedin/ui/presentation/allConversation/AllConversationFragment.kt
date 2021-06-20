@@ -101,7 +101,7 @@ fun DisplayMessage(
             Spacer(modifier = Modifier.size(15.dp))
             loadPicture(
                 url = iamgeUrl,
-                defaultImage = R.drawable.ic_comment
+                defaultImage = R.drawable.place_holder
             ).value?.let {
                 Image(
                     bitmap = it.asImageBitmap(),
