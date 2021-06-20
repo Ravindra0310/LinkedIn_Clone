@@ -20,8 +20,12 @@ class CommentsScreenViewModel @Inject constructor(
 
     val currentText = mutableStateOf("")
 
-    fun postComment(postId: String) {
-        repository.addComment(postId = postId, comment = currentText.value)
+    fun postComment(postId: String, postOwnerUid: String) {
+        repository.addComment(
+            postId = postId,
+            comment = currentText.value,
+            postOwnerUid = postOwnerUid
+        )
         currentText.value = ""
     }
 

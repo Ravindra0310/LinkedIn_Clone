@@ -21,10 +21,6 @@ Uapp/src/main/java/com/example/jobedin/data/remote/dto/conversationDto/Conversat
 Sapp/src/main/java/com/example/jobedin/data/remote/dto/conversationDto/MessageDto.kt,4\c\4cbce9d48090d58e35cff33e099a62da23161d1e
 
 Oapp/src/main/java/com/example/jobedin/data/remote/dto/DisplayConversationDto.kt,8\2\82389c8d1fe4c0e059294a69064f0c1e84f4678f
-á
-Wapp/src/main/java/com/example/jobedin/ui/presentation/homeScreen/HomeScreenViewModel.kt,b\c\bc8e3b476c023fffe76bc0ef7bf6f09535c4f291
-a
-1app/src/main/java/com/example/jobedin/LinkedIn.kt,c\f\cf4171ad6538fb9142f07d6c6743079ab24f4d88
 Ö
 Uapp/src/main/java/com/example/jobedin/ui/presentation/parcelables/UserDetailParcel.kt,c\3\c34dfcf72362d4504c0978735737b41be6406837
 ë
@@ -35,14 +31,8 @@ t
 Dapp/src/main/java/com/example/jobedin/data/remote/dto/CommentsDto.kt,d\8\d8ae4ef576c66ee4c7fe3d24b37466526421bb31
 •
 uapp/src/main/java/com/example/jobedin/ui/presentation/modelsForDetachingListeners/DatabaseRefAndChildEventListener.kt,9\7\974df41df86f6abf972298b8dfa0d1c635076167
-
-Oapp/src/main/java/com/example/jobedin/ui/presentation/parcelables/PostParcel.kt,5\e\5e773e4837157c788ae43e5c0443e4c6265953f6
 è
 _app/src/main/java/com/example/jobedin/ui/presentation/searchFragment/SearchFragmentViewModel.kt,8\5\85b77ea104086551a9aa7957e54c9ae208234488
-é
-^app/src/main/java/com/example/jobedin/ui/presentation/commentScreen/CommentsScreenViewModel.kt,7\6\761ac46b2a9e85e474796a5ecc2802d7dcc88f86
-q
-Aapp/src/main/java/com/example/jobedin/data/remote/dto/PostsDto.kt,a\a\aa1c8b81f7509c9d9948f95605c5d3f6c0cff0f2
 g
 7app/src/main/java/com/example/jobedin/ui/theme/Theme.kt,e\8\e81ecd2985330cd8a9f486ebbce99bf52b6893ee
 g

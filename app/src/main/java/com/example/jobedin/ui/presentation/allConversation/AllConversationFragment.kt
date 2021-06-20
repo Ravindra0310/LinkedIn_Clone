@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.jobedin.MainActivity
 import com.example.jobedin.R
 import com.example.jobedin.ui.presentation.parcelables.UserDetailParcel
 import com.example.jobedin.ui.theme.PostDesColorGrey
@@ -80,6 +81,19 @@ class AllConversationFragment : Fragment() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        val activity = activity as MainActivity
+        activity.hideBottomNavi()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val activity = activity as MainActivity
+        activity.showBottomNavi()
+    }
+
 }
 
 @Composable

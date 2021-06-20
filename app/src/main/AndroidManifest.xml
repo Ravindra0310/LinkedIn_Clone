@@ -25,7 +25,7 @@
             android:name=".ProfileActivity"
             android:exported="true" />
 
-        <service
+     <!--   <service
             android:name=".service.FirebaseService"
             android:exported="false"
             android:permission="com.google.android.c2dm.permission.SEND">
@@ -34,7 +34,7 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-
+-->
 
         <activity
             android:name=".chat.Adapter.ChatMessageActivity"

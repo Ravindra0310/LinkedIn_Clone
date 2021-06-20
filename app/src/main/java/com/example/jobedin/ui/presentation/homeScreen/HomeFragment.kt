@@ -127,7 +127,8 @@ class HomeFragment : Fragment() {
                                         viewModel.updateLikeList(
                                             postId = viewModel.posts[post]!!.uniqueKey!!,
                                             addLike = false,
-                                            numberOfLikes = viewModel.posts[post]?.likes ?: 1
+                                            numberOfLikes = viewModel.posts[post]?.likes ?: 1,
+                                            uidOfPostOwner = viewModel.posts[post]?.userUid ?: "nan"
                                         )
                                         false
 
@@ -140,7 +141,8 @@ class HomeFragment : Fragment() {
                                         viewModel.updateLikeList(
                                             postId = viewModel.posts[post]!!.uniqueKey!!,
                                             addLike = true,
-                                            numberOfLikes = viewModel.posts[post]?.likes ?: 0
+                                            numberOfLikes = viewModel.posts[post]?.likes ?: 0,
+                                            uidOfPostOwner = viewModel.posts[post]?.userUid ?: "nan"
                                         )
                                         true
                                     }
@@ -164,7 +166,9 @@ class HomeFragment : Fragment() {
                                                 postVideo = viewModel.posts!![post]?.postVideo,
                                                 likes = viewModel.posts[post]?.likes,
                                                 isLiked = isLiked,
-                                                uniqueKey = viewModel.posts[post]?.uniqueKey
+                                                uniqueKey = viewModel.posts[post]?.uniqueKey,
+                                                postOwnerUid = viewModel.posts[post]?.userUid
+                                                    ?: "nan"
                                             )
                                         )
                                     findNavController().navigate(action)
@@ -214,9 +218,6 @@ class HomeFragment : Fragment() {
     }
 
 }
-
-
-
 
 
 @Composable
@@ -341,7 +342,7 @@ fun SearchBar(
 
 
 @Composable
-fun StoriesRow(userImage:String) {
+fun StoriesRow(userImage: String) {
 
     Box(
         modifier = Modifier

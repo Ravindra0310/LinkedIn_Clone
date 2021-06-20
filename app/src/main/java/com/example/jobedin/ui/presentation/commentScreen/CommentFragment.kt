@@ -62,7 +62,8 @@ class CommentFragment : Fragment() {
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.White)
+                            .background(Color.White),
+                        contentPadding = PaddingValues(bottom = 50.dp)
                     ) {
                         item {
                             Column {
@@ -124,7 +125,10 @@ class CommentFragment : Fragment() {
                             viewModel.currentText.value = it
                         },
                         onPost = {
-                            viewModel.postComment(postData.uniqueKey ?: "nan")
+                            viewModel.postComment(
+                                postData.uniqueKey ?: "nan",
+                                postOwnerUid = postData.postOwnerUid
+                            )
                         }
                     )
                 }

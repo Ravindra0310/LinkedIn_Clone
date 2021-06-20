@@ -62,6 +62,7 @@ class AddPostFragment : Fragment() {
 
         val userImage = FirebaseAuth.getInstance().currentUser?.photoUrl.toString()
         val userName = FirebaseAuth.getInstance().currentUser?.displayName ?: "nan"
+        val userUid = FirebaseAuth.getInstance().currentUser?.uid ?: "nan"
 
         return ComposeView(requireContext()).apply {
             setContent {
@@ -85,7 +86,11 @@ class AddPostFragment : Fragment() {
                                 isPostEnabled = viewModel.currentText.value.isNotEmpty(),
                                 onClick = {
                                     if (viewModel.currentText.value.isNotEmpty()) {
-                                        viewModel.addPost(name=userName, image =userImage )
+                                        viewModel.addPost(
+                                            name = userName,
+                                            image = userImage,
+                                            currentUserUid = userUid
+                                        )
                                         val action =
                                             AddPostFragmentDirections.actionAddPostFragmentToHomeFragment()
                                         findNavController().navigate(action)
