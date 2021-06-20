@@ -107,7 +107,7 @@ fun Post(
         }
         Spacer(modifier = Modifier.size(10.dp))
         if (postImage != null && postImage != "nan") {
-            loadPicture(postImage, R.drawable.ic_comment).value?.let {
+            loadPicture(postImage, R.drawable.place_holder).value?.let {
                 Image(
                     bitmap = it.asImageBitmap(),
                     contentDescription = "image of the post done by $userName",
@@ -236,14 +236,14 @@ fun PostHeader(
 
         loadPicture(
             imageUrl,
-            R.drawable.ic_share
+            R.drawable.place_holder
         ).value?.let {
             Image(
                 bitmap = it.asImageBitmap(),
                 contentDescription = "header of use $userName",
                 modifier = Modifier
                     //.clip(CircleShape)
-                    .size(45.dp)
+                    .size(45.dp).clip(CircleShape)
             )
         }
         Spacer(modifier = Modifier.size(8.dp))

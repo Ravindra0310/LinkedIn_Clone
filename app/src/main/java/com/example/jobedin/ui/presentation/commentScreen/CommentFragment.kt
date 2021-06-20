@@ -168,7 +168,7 @@ fun CommentSectionTextBox(
         ) {
             loadPicture(
                 url = currentUserImage,
-                defaultImage = R.drawable.ic_comment
+                defaultImage = R.drawable.place_holder
             ).value?.let {
                 Image(
                     bitmap = it.asImageBitmap(),
@@ -239,7 +239,7 @@ fun CommentBox(
             Spacer(modifier = Modifier.size(18.dp))
             loadPicture(
                 url = image,
-                defaultImage = R.drawable.ic_comment,
+                defaultImage = R.drawable.place_holder,
             ).value?.let {
                 Image(
                     bitmap = it.asImageBitmap(),

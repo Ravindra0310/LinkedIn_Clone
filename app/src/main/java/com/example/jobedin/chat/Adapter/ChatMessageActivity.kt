@@ -1,5 +1,6 @@
 package com.example.jobedin.chat.Adapter
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +14,7 @@ import com.example.jobedin.Model.PushNotification
 import com.example.jobedin.Model.User
 import com.example.jobedin.R
 import com.example.jobedin.chat.Adapter.restrofit.RetrofitInstance
-import com.example.jobedin.ui.presentation.homeScreen.userImage
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -29,6 +30,7 @@ class ChatMessageActivity : AppCompatActivity() {
     var chatList = ArrayList<Chat>()
     var topic = ""
 
+    @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_message)

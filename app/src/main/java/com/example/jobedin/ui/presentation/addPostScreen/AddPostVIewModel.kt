@@ -1,6 +1,5 @@
 package com.example.jobedin.ui.presentation.addPostScreen
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.jobedin.MainActivity
@@ -21,7 +20,7 @@ class AddPostVIewModel @Inject constructor(
         currentText.value = text
     }
 
-    fun addPost() {
+    fun addPost(name: String, image: String) {
         val type = MainActivity.tempFileExt;
         if (type == "jpg" || type == "bmp" || type == "jpeg" || type == "png") {
             repository.uploadMedia(
@@ -29,7 +28,8 @@ class AddPostVIewModel @Inject constructor(
                     postText = currentText.value,
                     subDis1 = "Android Developer",
                     time = "Just now",
-                    userName = "user name",
+                    userName = name,
+                    profilePic = image
                 )
             )
         } else if (type == "mp4" || type == "mkv" || type == "webm" || type == "3gp") {
@@ -38,7 +38,8 @@ class AddPostVIewModel @Inject constructor(
                     postText = currentText.value,
                     subDis1 = "Android Developer",
                     time = "Just now",
-                    userName = "user name",
+                    userName = name,
+                    profilePic = image
                 )
             )
         } else {
@@ -47,7 +48,8 @@ class AddPostVIewModel @Inject constructor(
                     postText = currentText.value,
                     subDis1 = "Android Developer",
                     time = "Just now",
-                    userName = "user name",
+                    userName = name,
+                    profilePic = image
                 )
             )
         }
