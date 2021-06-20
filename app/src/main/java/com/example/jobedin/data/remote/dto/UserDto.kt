@@ -1,7 +1,6 @@
 package com.example.jobedin.data.remote.dto
 
 
-
 data class UserDto(
     val email: String? = null,
     val image: String? = "nan",
@@ -9,4 +8,5 @@ data class UserDto(
     val uid: String? = null,
     val name: String? = null,
     val description: String? = null,
+    val fcmToken: String? = null
 )

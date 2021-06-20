@@ -1,17 +1,26 @@
 package com.example.jobedin.repository
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
+import com.example.jobedin.data.remote.api.NotificationApi
 import com.example.jobedin.data.remote.dto.DisplayConversationDto
 import com.example.jobedin.data.remote.dto.conversationDto.Conversation
 import com.example.jobedin.data.remote.dto.conversationDto.MessageDto
+import com.example.jobedin.data.remote.dto.notification.NotificationData
+import com.example.jobedin.data.remote.dto.notification.PushNotification
 import com.example.jobedin.ui.presentation.modelsForDetachingListeners.DatabaseRefAndChildEventListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class ChatRepository {
+class ChatRepository @Inject constructor(val notificationApi: NotificationApi) {
 
     val currentUser = FirebaseAuth.getInstance().currentUser
 
@@ -31,7 +40,8 @@ class ChatRepository {
 
                     allCurrentConversations.clear()
                     for (ds in snapshot.children) {
-                        allCurrentConversations.add(0,
+                        allCurrentConversations.add(
+                            0,
                             DisplayConversationDto(
                                 id = ds.child("id").getValue(String::class.java),
                                 image = ds.child("image").getValue(String::class.java),
@@ -163,6 +173,30 @@ class ChatRepository {
             allConversation.child(friendUid).child(conversationUid)
         friendDisplayConversation.updateChildren(hopperUpdates)
 
+        val friendFcmRef =
+            Firebase.database.getReference("Users").child(friendUid).child("fcmToken")
+        friendFcmRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val fcmToken = snapshot.getValue(String::class.java)
+                if (fcmToken != null) {
+                    sendNotification(
+                        PushNotification(
+                            data = NotificationData(
+                                "${currentUser?.displayName} send a message",
+                                message = message
+                            ),
+                            fcmToken
+                        )
+                    )
+                }
+                friendFcmRef.removeEventListener(this)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
     }
 
 
@@ -178,5 +212,18 @@ class ChatRepository {
         }
     }
 
+
+    fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val response = notificationApi.postNotification(notification)
+            if (response.isSuccessful) {
+                Log.d("chat repo", "Reposone ${Gson().toJson(response)}")
+            } else {
+                Log.e("chat repo", response.errorBody().toString())
+            }
+        } catch (e: Exception) {
+            Log.e("chat repo", e.toString())
+        }
+    }
 
 }
