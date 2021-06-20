@@ -8,24 +8,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/ivJobImageLogo"
             android:layout_width="42dp"
             android:layout_height="42dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="17dp"
             android:scaleType="fitXY"
-            android:layout_margin="17dp"
-            android:src="@drawable/bgimage"/>
+            android:src="@drawable/bgimage" />
+
         <TextView
             android:id="@+id/tvJobTextHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
-            android:text="Android Developer"
-            android:textSize="17sp"
-            android:textColor="#141313"
-            android:textStyle="bold"
             android:layout_toRightOf="@+id/ivJobImageLogo"
-            />
+            android:text="Android Developer"
+            android:textColor="#141313"
+            android:textSize="17sp"
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/tvCompanyName"
             android:layout_width="wrap_content"

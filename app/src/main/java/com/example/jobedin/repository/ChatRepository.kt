@@ -217,12 +217,12 @@ class ChatRepository @Inject constructor(val notificationApi: NotificationApi) {
         try {
             val response = notificationApi.postNotification(notification)
             if (response.isSuccessful) {
-                Log.d("chat repo", "Reposone ${Gson().toJson(response)}")
+              //  Log.d("chat repo", "Reposone ${Gson().toJson(response)}")
             } else {
-                Log.e("chat repo", response.errorBody().toString())
+                //Log.e("chat repo", response.errorBody().toString())
             }
         } catch (e: Exception) {
-            Log.e("chat repo", e.toString())
+            //Log.e("chat repo", e.toString())
         }
     }
 

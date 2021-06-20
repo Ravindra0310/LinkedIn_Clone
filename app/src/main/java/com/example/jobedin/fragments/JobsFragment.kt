@@ -12,14 +12,16 @@ import com.example.jobedin.RecyclerViewComponant.JobRecycelerView.JobAdapter
 import com.example.jobedin.RecyclerViewComponant.JobRecycelerView.JobModel
 import com.example.jobedin.RecyclerViewComponant.Personality
 import com.example.jobedin.RecyclerViewComponant.PersonalityAdepter
+import com.example.jobedin.repository.LinkedInRepository
 import kotlinx.android.synthetic.main.fragment_jobs.*
 import kotlinx.android.synthetic.main.fragment_network.*
 import kotlinx.android.synthetic.main.fragment_network.rlLayout
 
 
 class JobsFragment : Fragment() {
-    private var jobArrayList:ArrayList<JobModel>?=null
-
+   var repository=LinkedInRepository()
+    private var jobArrayList=ArrayList<JobModel>()
+lateinit var jobAdapter:JobAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,15 +47,23 @@ class JobsFragment : Fragment() {
 
     private fun buildData() {
         jobArrayList = ArrayList()
-
+        repository.getJobData().let {
+            
+        }
         for (i in 0..99) {
             if (i % 2 == 0) {
                 jobArrayList!!.add(
-                    JobModel(R.drawable.bgimage,"Android Developer","ShareChat","Delhi","2 weeks ago"))
+                    JobModel("https://media-exp3.licdn.com/dms/image/C4D0BAQG_oY7LkqBPBA/" +
+                            "company-logo_100_100/0/1622604168326?e=1632355200&v=beta&t=6CXWa4Vdco" +
+                            "QjPBYK1VEFUMaY4xl_-Gx_ojD-Jn7E1bY","Android Develope" +
+                            "r","ShareChat","Delhi","2 weeks ago"))
             } else if (i % 2 == 1) {
                 jobArrayList!!.add(
                     JobModel(
-                        R.drawable.bglloyed,"Mern Stack Developer","Rev sales","Banglore","1 hour ago"
+                       "https://media-exp3.licdn.com/dms/image/C560BAQEAvxNRkegJiQ/company-" +
+                               "logo_100_100/0/1519895803576?e=1632355200&v=beta&t=HKIEGSd1zDjdXVh5H" +
+                               "-uVYvN-XDUN-IeBt5fKS4ZnZy0","Mern Stack Developer",
+                        "Rev sales","Banglore","1 hour ago"
                     )
                 )
             }
