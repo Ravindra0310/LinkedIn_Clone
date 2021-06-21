@@ -25,6 +25,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -62,7 +63,8 @@ class CommentFragment : Fragment() {
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.White)
+                            .background(Color.White),
+                        contentPadding = PaddingValues(bottom = 50.dp)
                     ) {
                         item {
                             Column {
@@ -124,7 +126,10 @@ class CommentFragment : Fragment() {
                             viewModel.currentText.value = it
                         },
                         onPost = {
-                            viewModel.postComment(postData.uniqueKey ?: "nan")
+                            viewModel.postComment(
+                                postData.uniqueKey ?: "nan",
+                                postOwnerUid = postData.postOwnerUid
+                            )
                         }
                     )
                 }

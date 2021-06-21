@@ -11,5 +11,6 @@ data class PostsDtoItem(
     val listOfAllLiked: HashMap<String, Boolean>? = hashMapOf(),
     val userName: String? = null,
     val postImage: String? = null,
-    var uniqueKey: String? = null
+    var uniqueKey: String? = null,
+    var userUid: String? = null
 )

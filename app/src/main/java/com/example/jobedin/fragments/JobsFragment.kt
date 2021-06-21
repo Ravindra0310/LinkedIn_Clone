@@ -12,14 +12,20 @@ import com.example.jobedin.RecyclerViewComponant.JobRecycelerView.JobAdapter
 import com.example.jobedin.RecyclerViewComponant.JobRecycelerView.JobModel
 import com.example.jobedin.RecyclerViewComponant.Personality
 import com.example.jobedin.RecyclerViewComponant.PersonalityAdepter
+import com.example.jobedin.data.remote.api.NotificationApi
 import com.example.jobedin.repository.LinkedInRepository
 import kotlinx.android.synthetic.main.fragment_jobs.*
 import kotlinx.android.synthetic.main.fragment_network.*
 import kotlinx.android.synthetic.main.fragment_network.rlLayout
+import javax.inject.Inject
 
 
 class JobsFragment : Fragment() {
-   var repository=LinkedInRepository()
+
+    @Inject
+    lateinit var notificationApi: NotificationApi
+
+   var repository=LinkedInRepository(notificationApi)
     private var jobArrayList=ArrayList<JobModel>()
 lateinit var jobAdapter:JobAdapter
 

@@ -9,9 +9,12 @@ import androidx.lifecycle.MutableLiveData
 import com.example.jobedin.MainActivity
 import com.example.jobedin.RecyclerViewComponant.JobRecycelerView.JobModel
 import com.example.jobedin.RecyclerViewComponant.NotificationRecyclerView.NotificationModel
+import com.example.jobedin.data.remote.api.NotificationApi
 import com.example.jobedin.data.remote.dto.CommentsDto
 import com.example.jobedin.data.remote.dto.PostsDtoItem
 import com.example.jobedin.data.remote.dto.UserDto
+import com.example.jobedin.data.remote.dto.notification.NotificationData
+import com.example.jobedin.data.remote.dto.notification.PushNotification
 import com.example.jobedin.ui.presentation.modelsForDetachingListeners.DatabaseRefAndChildEventListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -19,12 +22,13 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
-import com.example.jobedin.Model.User
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-
-
-class LinkedInRepository {
+class LinkedInRepository @Inject constructor(val notificationApi: NotificationApi) {
 
     private val database = Firebase.database
     private val postDatabaseReference = database.getReference("posts")
@@ -33,7 +37,7 @@ class LinkedInRepository {
     var uploadTask: UploadTask? = null
     var firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
     var storageReference = firebaseStorage.getReference("post_images")
-    private var joblist= ArrayList<JobModel>()
+    private var joblist = ArrayList<JobModel>()
     private val mutableLiveData = MutableLiveData<ArrayList<JobModel>>()
 
     init {
@@ -136,7 +140,8 @@ class LinkedInRepository {
                         time = postItem.time,
                         userName = postItem.userName,
                         postImage = downloadUrl,
-                        profilePic = postItem.profilePic
+                        profilePic = postItem.profilePic,
+                        userUid = currentUserUid
                     )
                     addPost(item)
                 } else if (type == "mp4" || type == "mkv" || type == "webm" || type == "3gp") {
@@ -145,8 +150,9 @@ class LinkedInRepository {
                         subDis1 = postItem.subDis1,
                         time = postItem.time,
                         userName = postItem.userName,
-                        postVideo = downloadUrl ,
-                        profilePic = postItem.profilePic
+                        postVideo = downloadUrl,
+                        profilePic = postItem.profilePic,
+                        userUid = currentUserUid
                     )
                     addPost(item)
                 } else {
@@ -210,13 +216,15 @@ class LinkedInRepository {
     fun updateLikedList(
         postId: String,
         addLike: Boolean,
-        numberOfLikes: Int
+        numberOfLikes: Int,
+        uidOfPostOwner: String
     ) {
         val likesRef = postDatabaseReference.child(postId).child("listOfAllLiked")
         val hopperUpdates: MutableMap<String, Any> = HashMap()
         if (addLike) {
             hopperUpdates[currentUserUid] = true
             likesRef.updateChildren(hopperUpdates)
+            sendLikeNotification(uidOfPostOwner = uidOfPostOwner)
         } else {
             likesRef.child(currentUserUid).removeValue()
         }
@@ -226,10 +234,28 @@ class LinkedInRepository {
 
     }
 
+
+    private fun sendLikeNotification(uidOfPostOwner: String, isLike: Boolean = true) {
+        val data = NotificationModel(
+            postImage = currentUserImage,
+            text = if (isLike) "$currentUserName liked your post" else "$currentUserName commented your post",
+            time = "Just now"
+        )
+        database.getReference("notification").child(uidOfPostOwner).push().setValue(data)
+
+        sendNotification(
+            notificationReciverUid = uidOfPostOwner,
+            notificationTitle = "$currentUserName liked your post",
+            notificationMessage = "$currentUserName liked your post"
+        )
+
+    }
+
+
     private val currentUserName = FirebaseAuth.getInstance().currentUser?.displayName ?: "nan"
     val currentUserImage = FirebaseAuth.getInstance().currentUser?.photoUrl.toString() ?: "nan"
 
-    fun addComment(postId: String, comment: String) {
+    fun addComment(postId: String, comment: String, postOwnerUid: String) {
         val data = CommentsDto(
             name = currentUserName,
             des = "Android Developer",
@@ -237,6 +263,11 @@ class LinkedInRepository {
             comment = comment
         )
         postDatabaseReference.child(postId).child("comment").push().setValue(data)
+
+
+
+
+        sendLikeNotification(postOwnerUid, isLike = false)
 
     }
 
@@ -280,15 +311,15 @@ class LinkedInRepository {
     }
 
     fun getJobData(): LiveData<ArrayList<JobModel>> {
-        var databaseRefercence= FirebaseDatabase.getInstance().getReference("notification")
+        var databaseRefercence = FirebaseDatabase.getInstance().getReference("notification")
         databaseRefercence.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 joblist.clear()
-                for(dataSnapShot: DataSnapshot in snapshot.children){
-                    val notification=dataSnapShot.getValue(JobModel::class.java)
+                for (dataSnapShot: DataSnapshot in snapshot.children) {
+                    val notification = dataSnapShot.getValue(JobModel::class.java)
                     joblist.add(JobModel())
                 }
-                mutableLiveData.value=joblist
+                mutableLiveData.value = joblist
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -299,5 +330,52 @@ class LinkedInRepository {
 
         return mutableLiveData
     }
+
+
+    fun sendNotification(
+        notificationReciverUid: String,
+        notificationTitle: String,
+        notificationMessage: String
+    ) {
+        val friendFcmRef =
+            Firebase.database.getReference("Users").child(notificationReciverUid).child("fcmToken")
+        friendFcmRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val fcmToken = snapshot.getValue(String::class.java)
+                if (fcmToken != null) {
+                    sendActualNotification(
+                        PushNotification(
+                            data = NotificationData(
+                                notificationTitle,
+                                message = notificationMessage
+                            ),
+                            fcmToken
+                        )
+                    )
+                }
+                friendFcmRef.removeEventListener(this)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
+    }
+
+    fun sendActualNotification(notification: PushNotification) =
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = notificationApi.postNotification(notification)
+                if (response.isSuccessful) {
+                    //  Log.d("chat repo", "Reposone ${Gson().toJson(response)}")
+                } else {
+                    //Log.e("chat repo", response.errorBody().toString())
+                }
+            } catch (e: Exception) {
+                //Log.e("chat repo", e.toString())
+            }
+        }
 
 }

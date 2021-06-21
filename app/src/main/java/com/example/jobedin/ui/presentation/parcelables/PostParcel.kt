@@ -16,5 +16,6 @@ data class PostParcel(
     val userName: String? = null,
     val postImage: String? = null,
     var uniqueKey: String? = null,
-    var isLiked: Boolean
+    var isLiked: Boolean,
+   var postOwnerUid:String
 ) : Parcelable

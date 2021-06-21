@@ -35,10 +35,16 @@ class HomeScreenViewModel @Inject constructor(
     fun updateLikeList(
         postId: String,
         addLike: Boolean,
-        numberOfLikes:Int
+        numberOfLikes: Int,
+        uidOfPostOwner: String
     ) {
 
-        repository.updateLikedList(postId = postId, addLike = addLike,numberOfLikes=numberOfLikes)
+        repository.updateLikedList(
+            postId = postId,
+            addLike = addLike,
+            numberOfLikes = numberOfLikes,
+            uidOfPostOwner = uidOfPostOwner
+        )
     }
 
 }

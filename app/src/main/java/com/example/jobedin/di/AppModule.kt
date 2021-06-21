@@ -18,8 +18,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providesRepository(): LinkedInRepository {
-        return LinkedInRepository()
+    fun providesRepository(notificationApi: NotificationApi): LinkedInRepository {
+        return LinkedInRepository(notificationApi)
 
     }
 

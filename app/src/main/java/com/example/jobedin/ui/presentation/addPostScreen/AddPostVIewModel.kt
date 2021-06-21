@@ -20,7 +20,7 @@ class AddPostVIewModel @Inject constructor(
         currentText.value = text
     }
 
-    fun addPost(name: String, image: String) {
+    fun addPost(name: String, image: String,currentUserUid:String) {
         val type = MainActivity.tempFileExt;
         if (type == "jpg" || type == "bmp" || type == "jpeg" || type == "png") {
             repository.uploadMedia(
@@ -29,7 +29,8 @@ class AddPostVIewModel @Inject constructor(
                     subDis1 = "Android Developer",
                     time = "Just now",
                     userName = name,
-                    profilePic = image
+                    profilePic = image,
+                    userUid = currentUserUid
                 )
             )
         } else if (type == "mp4" || type == "mkv" || type == "webm" || type == "3gp") {
@@ -39,7 +40,8 @@ class AddPostVIewModel @Inject constructor(
                     subDis1 = "Android Developer",
                     time = "Just now",
                     userName = name,
-                    profilePic = image
+                    profilePic = image,
+                    userUid = currentUserUid
                 )
             )
         } else {
@@ -49,7 +51,8 @@ class AddPostVIewModel @Inject constructor(
                     subDis1 = "Android Developer",
                     time = "Just now",
                     userName = name,
-                    profilePic = image
+                    profilePic = image,
+                    userUid = currentUserUid
                 )
             )
         }
