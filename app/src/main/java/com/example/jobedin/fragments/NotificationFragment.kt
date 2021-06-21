@@ -53,7 +53,7 @@ class NotificationFragment : Fragment() {
                 notificationArrayList.clear()
                 for (dataSnapShot: DataSnapshot in snapshot.children) {
                     val notification = dataSnapShot.getValue(NotificationModel::class.java)
-                    notificationArrayList.add(notification!!)
+                    notificationArrayList.add(0,notification!!)
                     userAdapter.notifyDataSetChanged()
                 }
             }

@@ -389,7 +389,7 @@ fun AddPostTextArea(
         Spacer(modifier = Modifier.size(20.dp))
         loadPicture(
             MainActivity.tempPicPath,
-            R.drawable.place_holder
+            R.drawable.whiterounf
         ).value?.let {
             Image(
                 bitmap = it.asImageBitmap(),
